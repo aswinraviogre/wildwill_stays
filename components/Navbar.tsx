@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Calendar, Phone, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, MapPin } from "lucide-react";
 import { RESORTS_DATA } from "@/data/resortsData";
 
 interface NavbarProps {
@@ -13,16 +13,13 @@ interface NavbarProps {
 export default function Navbar({ onOpenBooking }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [resortsDropdownOpen, setResortsDropdownOpen] = useState(false);
+  const [estatesDropdownOpen, setEstatesDropdownOpen] = useState(false);
+  const [destinationsDropdownOpen, setDestinationsDropdownOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 30) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 20);
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -41,67 +38,123 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-navy-950 ${
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "py-3 shadow-xl shadow-navy-950/20 border-b border-white/10"
-            : "py-4.5 border-b border-navy-900"
+            ? "bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.06)] border-b border-[#ece7de] py-3.5"
+            : "bg-white/90 backdrop-blur-sm border-b border-[#ece7de]/80 py-4.5"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Left: Brand Logo */}
+            {/* Left: Brand Logo in SaffronStays Typography */}
             <Link
               href="/"
               className="group flex flex-col items-start focus:outline-none"
             >
-              <div className="flex items-center space-x-2">
-                <span className="text-xl sm:text-2xl font-serif tracking-[0.25em] text-white font-bold group-hover:text-sky-300 transition-colors">
+              <div className="flex items-center space-x-1.5">
+                <span className="text-xl sm:text-2xl font-serif tracking-[0.18em] text-[#111b29] font-bold">
                   WILDVILL
                 </span>
-                <span className="inline-block w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+                <span className="w-2 h-2 rounded-full bg-[#fba919] inline-block" />
               </div>
-              <span className="text-[10px] sm:text-[11px] tracking-[0.35em] text-slate-300 uppercase font-light">
-                Luxury Stays • Wayanad
+              <span className="text-[9px] sm:text-[10px] tracking-[0.28em] text-[#666666] uppercase font-medium">
+                LUXURY VILLAS & ESTATES • WAYANAD
               </span>
             </Link>
 
-            {/* Center: Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-7">
-              {/* Resorts Dropdown */}
+            {/* Center: Desktop Navigation with SaffronStays hover underlines */}
+            <nav className="hidden lg:flex items-center space-x-8">
+              {/* Destinations Dropdown */}
               <div
                 className="relative group"
-                onMouseEnter={() => setResortsDropdownOpen(true)}
-                onMouseLeave={() => setResortsDropdownOpen(false)}
+                onMouseEnter={() => setDestinationsDropdownOpen(true)}
+                onMouseLeave={() => setDestinationsDropdownOpen(false)}
               >
-                <button className="flex items-center space-x-1.5 text-sm font-medium text-slate-200 hover:text-white py-2 transition-colors">
-                  <span>Our Retreats</span>
-                  <ChevronDown className="w-4 h-4 opacity-70 group-hover:rotate-180 transition-transform duration-300" />
+                <button className="relative flex items-center space-x-1 text-sm font-medium text-[#111b29] py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100">
+                  <span>Destinations</span>
+                  <ChevronDown className="w-4 h-4 opacity-60 group-hover:rotate-180 transition-transform duration-300 text-[#111b29]" />
                 </button>
 
-                {/* Dropdown Menu */}
                 <div
-                  className={`absolute top-full left-0 w-80 pt-2 transition-all duration-300 origin-top ${
-                    resortsDropdownOpen
+                  className={`absolute top-full left-1/2 -translate-x-1/2 w-80 pt-2 transition-all duration-300 origin-top ${
+                    destinationsDropdownOpen
                       ? "opacity-100 scale-100 pointer-events-auto"
                       : "opacity-0 scale-95 pointer-events-none"
                   }`}
                 >
-                  <div className="bg-navy-900 p-3 rounded-2xl border border-white/15 shadow-2xl backdrop-blur-2xl space-y-1">
+                  <div className="bg-white p-4 rounded-2xl border border-[#ece7de] shadow-[0_20px_40px_rgba(17,27,41,0.12)] space-y-2">
+                    <div className="text-[11px] font-semibold uppercase tracking-wider text-[#666666] px-2">
+                      Wayanad Regions
+                    </div>
+                    <Link
+                      href="/resorts/mist-meadows"
+                      className="block p-2.5 rounded-xl hover:bg-[#fff6e6] transition-colors"
+                    >
+                      <div className="flex items-center text-sm font-medium text-[#111b29]">
+                        <MapPin className="w-3.5 h-3.5 text-[#fba919] mr-2" />
+                        <span>Meppadi Valley</span>
+                      </div>
+                      <p className="text-xs text-[#666666] ml-5">40-acre coffee & stream estate</p>
+                    </Link>
+                    <Link
+                      href="/resorts/whispering-woods"
+                      className="block p-2.5 rounded-xl hover:bg-[#fff6e6] transition-colors"
+                    >
+                      <div className="flex items-center text-sm font-medium text-[#111b29]">
+                        <MapPin className="w-3.5 h-3.5 text-[#fba919] mr-2" />
+                        <span>Chembra Foothills</span>
+                      </div>
+                      <p className="text-xs text-[#666666] ml-5">Canopy glass chalet & mist trails</p>
+                    </Link>
+                    <Link
+                      href="/resorts/cloud-peak"
+                      className="block p-2.5 rounded-xl hover:bg-[#fff6e6] transition-colors"
+                    >
+                      <div className="flex items-center text-sm font-medium text-[#111b29]">
+                        <MapPin className="w-3.5 h-3.5 text-[#fba919] mr-2" />
+                        <span>Vythiri Heights</span>
+                      </div>
+                      <p className="text-xs text-[#666666] ml-5">3,200 ft cliffside infinity pool</p>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* The Estates Dropdown */}
+              <div
+                className="relative group"
+                onMouseEnter={() => setEstatesDropdownOpen(true)}
+                onMouseLeave={() => setEstatesDropdownOpen(false)}
+              >
+                <button className="relative flex items-center space-x-1 text-sm font-medium text-[#111b29] py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100">
+                  <span>Our Stays</span>
+                  <ChevronDown className="w-4 h-4 opacity-60 group-hover:rotate-180 transition-transform duration-300 text-[#111b29]" />
+                </button>
+
+                <div
+                  className={`absolute top-full left-1/2 -translate-x-1/2 w-88 pt-2 transition-all duration-300 origin-top ${
+                    estatesDropdownOpen
+                      ? "opacity-100 scale-100 pointer-events-auto"
+                      : "opacity-0 scale-95 pointer-events-none"
+                  }`}
+                >
+                  <div className="bg-white p-3.5 rounded-2xl border border-[#ece7de] shadow-[0_20px_40px_rgba(17,27,41,0.12)] space-y-1.5">
                     {RESORTS_DATA.map((resort) => (
                       <Link
                         key={resort.id}
                         href={`/resorts/${resort.slug}`}
-                        className="block p-3 rounded-xl hover:bg-navy-800 transition-all group/item"
+                        className="block p-2.5 rounded-xl hover:bg-[#fff6e6] transition-all group/item"
                       >
-                        <div className="text-[11px] font-semibold uppercase tracking-wider text-sky-400">
+                        <div className="text-[10px] font-semibold uppercase tracking-wider text-[#d98e0e]">
                           {resort.badge}
                         </div>
-                        <div className="text-sm font-semibold text-white group-hover/item:text-sky-300 flex items-center justify-between">
-                          <span>{resort.name.replace("Wildvill ", "")}</span>
-                          <span className="text-xs text-slate-400 font-normal">From {resort.startingPrice}</span>
+                        <div className="text-sm font-serif font-semibold text-[#111b29] group-hover/item:text-[#2d66a1] flex items-center justify-between">
+                          <span>{resort.name}</span>
+                          <span className="text-xs font-sans text-[#111b29] font-medium">Starts {resort.startingPrice}</span>
                         </div>
-                        <div className="text-xs text-slate-400 truncate mt-0.5">
-                          {resort.location}
+                        <div className="text-xs text-[#666666] truncate mt-0.5 flex items-center">
+                          <MapPin className="w-3 h-3 text-[#999] mr-1 shrink-0" />
+                          <span>{resort.location}</span>
                         </div>
                       </Link>
                     ))}
@@ -110,44 +163,11 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
               </div>
 
               <Link
-                href="/resorts/mist-meadows"
-                className={`text-sm font-medium transition-colors ${
-                  pathname === "/resorts/mist-meadows"
-                    ? "text-sky-400 font-semibold"
-                    : "text-slate-200 hover:text-white"
-                }`}
-              >
-                Mist & Meadows
-              </Link>
-
-              <Link
-                href="/resorts/whispering-woods"
-                className={`text-sm font-medium transition-colors ${
-                  pathname === "/resorts/whispering-woods"
-                    ? "text-emerald-400 font-semibold"
-                    : "text-slate-200 hover:text-white"
-                }`}
-              >
-                Whispering Woods
-              </Link>
-
-              <Link
-                href="/resorts/cloud-peak"
-                className={`text-sm font-medium transition-colors ${
-                  pathname === "/resorts/cloud-peak"
-                    ? "text-sky-400 font-semibold"
-                    : "text-slate-200 hover:text-white"
-                }`}
-              >
-                Cloud Peak
-              </Link>
-
-              <Link
                 href="/experiences"
-                className={`text-sm font-medium transition-colors ${
+                className={`relative text-sm font-medium py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                   pathname === "/experiences"
-                    ? "text-sky-400 font-semibold"
-                    : "text-slate-200 hover:text-white"
+                    ? "text-[#2d66a1] font-semibold after:scale-x-100"
+                    : "text-[#111b29] hover:text-[#2d66a1]"
                 }`}
               >
                 Experiences
@@ -155,10 +175,10 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
               <Link
                 href="/gallery"
-                className={`text-sm font-medium transition-colors ${
+                className={`relative text-sm font-medium py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                   pathname === "/gallery"
-                    ? "text-sky-400 font-semibold"
-                    : "text-slate-200 hover:text-white"
+                    ? "text-[#2d66a1] font-semibold after:scale-x-100"
+                    : "text-[#111b29] hover:text-[#2d66a1]"
                 }`}
               >
                 Gallery
@@ -166,32 +186,42 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
 
               <Link
                 href="/contact"
-                className={`text-sm font-medium transition-colors ${
+                className={`relative text-sm font-medium py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                   pathname === "/contact"
-                    ? "text-sky-400 font-semibold"
-                    : "text-slate-200 hover:text-white"
+                    ? "text-[#2d66a1] font-semibold after:scale-x-100"
+                    : "text-[#111b29] hover:text-[#2d66a1]"
                 }`}
               >
                 Contact
               </Link>
             </nav>
 
-            {/* Right: Sticky Book Now CTA & Mobile Trigger */}
-            <div className="flex items-center space-x-4">
+            {/* Right: Direct Call & SaffronStays Signature Blue Pill Button */}
+            <div className="flex items-center space-x-5">
+              <a
+                href="tel:+919526459920"
+                className="hidden md:flex items-center space-x-2 text-sm font-medium text-[#111b29] hover:text-[#2d66a1] transition-colors"
+                title="Call Wildvill Reservations"
+              >
+                <div className="w-8 h-8 rounded-full bg-[#fff6e6] border border-[#fba919]/30 flex items-center justify-center text-[#fba919]">
+                  <Phone className="w-4 h-4" />
+                </div>
+                <span className="hidden xl:inline tracking-tight font-semibold text-xs">
+                  +91 95264 59920
+                </span>
+              </a>
+
               <button
                 onClick={() => handleBookNow()}
-                className="relative inline-flex items-center justify-center px-5 py-2.5 overflow-hidden text-xs sm:text-sm font-semibold tracking-wider text-navy-950 uppercase rounded-full bg-white hover:bg-sky-50 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105 active:scale-95"
+                className="btn-saf-blue px-6 py-2.5 text-xs sm:text-sm font-semibold tracking-wide transition-transform hover:scale-105 active:scale-95 flex items-center space-x-1.5"
               >
-                <span className="relative flex items-center space-x-2">
-                  <Calendar className="w-4 h-4 text-navy-950" />
-                  <span>Book Stay</span>
-                </span>
+                <span>Book Stays</span>
               </button>
 
               {/* Mobile Hamburger Toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-slate-200 hover:text-white focus:outline-none"
+                className="lg:hidden p-2 text-[#111b29] hover:text-[#2d66a1] focus:outline-none"
                 aria-label="Toggle Navigation Menu"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -201,111 +231,105 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
         </div>
       </header>
 
-      {/* Mobile Menu Drawer Overlay */}
+      {/* Mobile Menu Drawer */}
       <div
-        className={`fixed inset-0 z-50 bg-black/80 backdrop-blur-md transition-opacity duration-300 lg:hidden ${
+        className={`fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 lg:hidden ${
           mobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setMobileMenuOpen(false)}
       >
         <div
-          className={`fixed top-0 right-0 bottom-0 w-4/5 max-w-sm bg-navy-950 p-6 pt-20 flex flex-col justify-between border-l border-white/10 transition-transform duration-300 ease-out overflow-y-auto ${
+          className={`fixed top-0 right-0 bottom-0 w-4/5 max-w-sm bg-white p-6 pt-6 flex flex-col justify-between border-l border-[#ece7de] shadow-2xl transition-transform duration-300 ease-out overflow-y-auto ${
             mobileMenuOpen ? "translate-x-0" : "translate-x-full"
           }`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="space-y-6">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div className="flex items-center justify-between border-b border-[#ece7de] pb-4">
               <div>
-                <span className="text-xs uppercase tracking-[0.2em] text-sky-400 font-semibold">
-                  Wildvill Luxury Stays
-                </span>
-                <p className="text-sm text-slate-300 mt-0.5">Wayanad Retreat Collection</p>
+                <div className="flex items-center space-x-1.5">
+                  <span className="text-lg font-serif font-bold text-[#111b29] tracking-wider">
+                    WILDVILL
+                  </span>
+                  <span className="w-2 h-2 rounded-full bg-[#fba919]" />
+                </div>
+                <p className="text-xs text-[#666666]">Luxury Villas & Estates in Wayanad</p>
               </div>
               <button
                 onClick={() => setMobileMenuOpen(false)}
-                className="p-1.5 rounded-full hover:bg-white/10 text-slate-300"
+                className="p-2 rounded-full hover:bg-slate-100 text-[#111b29]"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <nav className="flex flex-col space-y-3">
+            <nav className="flex flex-col space-y-1.5">
               <Link
                 href="/"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-base font-medium text-slate-100 hover:text-sky-400 transition-colors py-1"
+                className="text-sm font-semibold text-[#111b29] p-2 rounded-xl hover:bg-[#fff6e6] transition-colors"
               >
-                Home Overview
-              </Link>
-              <div className="pt-2 pb-1 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                The Retreats
-              </div>
-              <Link
-                href="/resorts/mist-meadows"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-slate-200 hover:text-sky-400 transition-colors flex items-center justify-between p-2 rounded-xl hover:bg-white/5"
-              >
-                <span>Mist & Meadows</span>
-                <span className="text-xs px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">Valley</span>
-              </Link>
-              <Link
-                href="/resorts/whispering-woods"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-slate-200 hover:text-emerald-400 transition-colors flex items-center justify-between p-2 rounded-xl hover:bg-white/5"
-              >
-                <span>Whispering Woods</span>
-                <span className="text-xs px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Forest Glasshouse</span>
-              </Link>
-              <Link
-                href="/resorts/cloud-peak"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-slate-200 hover:text-sky-400 transition-colors flex items-center justify-between p-2 rounded-xl hover:bg-white/5"
-              >
-                <span>Cloud Peak</span>
-                <span className="text-xs px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">Cliff Edge</span>
+                Home
               </Link>
 
-              <div className="pt-3 pb-1 text-[11px] font-bold uppercase tracking-widest text-slate-400">
-                Discover
+              <div className="pt-2 text-[11px] font-bold uppercase tracking-wider text-[#999] px-2">
+                Our Private Estates
+              </div>
+              {RESORTS_DATA.map((resort) => (
+                <Link
+                  key={resort.id}
+                  href={`/resorts/${resort.slug}`}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="flex items-center justify-between p-2 rounded-xl hover:bg-[#fff6e6] text-sm text-[#111b29] transition-colors"
+                >
+                  <div>
+                    <div className="font-serif font-medium">{resort.name}</div>
+                    <div className="text-[11px] text-[#666]">{resort.location}</div>
+                  </div>
+                  <span className="text-xs font-semibold text-[#2d66a1]">{resort.startingPrice}</span>
+                </Link>
+              ))}
+
+              <div className="pt-3 text-[11px] font-bold uppercase tracking-wider text-[#999] px-2">
+                Explore More
               </div>
               <Link
                 href="/experiences"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-slate-200 hover:text-sky-400 transition-colors py-1"
+                className="text-sm font-medium text-[#111b29] p-2 rounded-xl hover:bg-[#fff6e6] transition-colors"
               >
-                Wayanad Experiences
+                Curated Experiences
               </Link>
               <Link
                 href="/gallery"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-slate-200 hover:text-sky-400 transition-colors py-1"
+                className="text-sm font-medium text-[#111b29] p-2 rounded-xl hover:bg-[#fff6e6] transition-colors"
               >
-                Photo & Video Gallery
+                Photo Gallery
               </Link>
               <Link
                 href="/contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-slate-200 hover:text-sky-400 transition-colors py-1"
+                className="text-sm font-medium text-[#111b29] p-2 rounded-xl hover:bg-[#fff6e6] transition-colors"
               >
-                Contact & Location
+                Contact & Reservations
               </Link>
             </nav>
           </div>
 
-          <div className="pt-6 border-t border-white/10 space-y-3">
+          <div className="pt-6 border-t border-[#ece7de] space-y-3">
             <button
               onClick={() => handleBookNow()}
-              className="w-full py-3 bg-white text-navy-950 hover:bg-slate-100 font-semibold rounded-xl text-center shadow-lg transition-all"
+              className="btn-saf-blue w-full py-3.5 text-center text-sm shadow-md"
             >
-              Book Your Stay
+              Book Stays
             </button>
             <a
               href="tel:+919526459920"
-              className="flex items-center justify-center space-x-2 w-full py-2.5 text-xs text-slate-300 hover:text-white border border-white/10 rounded-xl"
+              className="flex items-center justify-center space-x-2 w-full py-2.5 text-xs text-[#111b29] border border-[#ece7de] rounded-full hover:bg-slate-50 font-medium"
             >
-              <Phone className="w-3.5 h-3.5 text-sky-400" />
-              <span>Concierge: +91 95264 59920</span>
+              <Phone className="w-3.5 h-3.5 text-[#fba919]" />
+              <span>Direct Concierge: +91 95264 59920</span>
             </a>
           </div>
         </div>

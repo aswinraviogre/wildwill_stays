@@ -96,10 +96,10 @@ Please share current villa availability, customized packages, and direct booking
         className="relative w-full max-w-3xl bg-white text-slate-900 rounded-3xl border border-slate-200 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Navy Header Bar */}
-        <div className="flex items-center justify-between p-6 bg-navy-950 text-white">
+        {/* Saffron Header Bar */}
+        <div className="flex items-center justify-between p-6 bg-[#111b29] text-white">
           <div className="flex items-center space-x-2">
-            <Sparkles className="w-5 h-5 text-sky-400" />
+            <Sparkles className="w-5 h-5 text-[#fba919]" />
             <div>
               <h3 className="text-xl font-serif font-bold text-white">
                 Reserve Your Stay at Wildvill
@@ -313,7 +313,7 @@ Please share current villa availability, customized packages, and direct booking
                 <button
                   type="button"
                   onClick={handleWhatsAppInquiry}
-                  className="inline-flex items-center justify-center space-x-2 py-3.5 px-6 rounded-xl bg-navy-950 hover:bg-navy-900 text-white font-semibold text-sm shadow-md transition-all duration-300"
+                  className="btn-saf-blue inline-flex items-center justify-center space-x-2 py-3.5 px-6 font-semibold text-sm shadow-md"
                 >
                   <Send className="w-4 h-4" />
                   <span>Direct Inquiry</span>

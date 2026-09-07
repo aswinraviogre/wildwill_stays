@@ -1,6 +1,17 @@
 @import "tailwindcss";
 
 @theme {
+  --color-saffron: #fba919;
+  --color-saffron-light: #fff6e6;
+  --color-saffron-dark: #d98e0e;
+  --color-saf-blue: #2d66a1;
+  --color-saf-blue-hover: #225182;
+  --color-saf-dark: #111b29;
+  --color-saf-border: #ece7de;
+  --color-saf-border-light: #f4f0e8;
+  --color-saf-bg: #fcfbf8;
+  --color-saf-muted: #666666;
+
   --color-navy-950: #050a17;
   --color-navy-900: #0a1226;
   --color-navy-850: #0e1935;
@@ -13,18 +24,19 @@
   --color-gold-600: #a9885c;
   --color-ice-100: #f0f6fc;
   --color-ice-200: #e2ecf9;
-  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-serif: 'Lora', 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
 :root {
-  --bg-primary: #ffffff;
-  --bg-secondary: #f8fafc;
+  --bg-primary: #fcfbf8;
+  --bg-secondary: #ffffff;
   --card-bg: #ffffff;
-  --text-primary: #0f172a;
-  --text-muted: #64748b;
-  --accent-gold: #c5a880;
-  --accent-blue: #0a1226;
+  --text-primary: #111b29;
+  --text-muted: #666666;
+  --accent-saffron: #fba919;
+  --accent-blue: #2d66a1;
+  --border-color: #ece7de;
 }
 
 html {
@@ -32,14 +44,18 @@ html {
 }
 
 body {
-  background-color: #ffffff;
-  color: #0f172a;
+  background-color: #fcfbf8;
+  color: #111b29;
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
 
 .font-serif {
   font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
 }
 
 /* Custom Standard Animation Keyframes */
@@ -100,30 +116,90 @@ body {
   animation: floatSlow 6s ease-in-out infinite;
 }
 
+/* SaffronStays Brand Buttons & Cards */
+.btn-saf-blue {
+  background-color: #2d66a1;
+  color: #ffffff;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(45, 102, 161, 0.25);
+}
+
+.btn-saf-blue:hover {
+  background-color: #225182;
+  box-shadow: 0 6px 20px rgba(45, 102, 161, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-saffron {
+  background-color: #fba919;
+  color: #111b29;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 14px rgba(251, 169, 25, 0.28);
+}
+
+.btn-saffron:hover {
+  background-color: #e59914;
+  box-shadow: 0 6px 20px rgba(251, 169, 25, 0.4);
+  transform: translateY(-1px);
+}
+
+.btn-saf-outline {
+  background-color: transparent;
+  color: #111b29;
+  border: 1px solid #ece7de;
+  border-radius: 9999px;
+  font-weight: 600;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-saf-outline:hover {
+  border-color: #fba919;
+  background-color: #fff6e6;
+  color: #111b29;
+}
+
+.saf-card {
+  background: #ffffff;
+  border: 1px solid #ece7de;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.saf-card:hover {
+  box-shadow: 0 16px 36px -4px rgba(17, 27, 41, 0.1);
+  border-color: #ded6c9;
+  transform: translateY(-3px);
+}
+
 /* Luxury Styling for White Theme & Navy Accents */
 .btn-navy {
-  background-color: #0a1226;
+  background-color: #111b29;
   color: #ffffff;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 25px -5px rgba(10, 18, 38, 0.25);
+  box-shadow: 0 10px 25px -5px rgba(17, 27, 41, 0.25);
 }
 
 .btn-navy:hover {
-  background-color: #132247;
+  background-color: #1a2a40;
   color: #ffffff;
-  box-shadow: 0 15px 30px -5px rgba(10, 18, 38, 0.35);
+  box-shadow: 0 15px 30px -5px rgba(17, 27, 41, 0.35);
   transform: translateY(-1px);
 }
 
 .btn-navy-outline {
   background-color: transparent;
-  color: #0a1226;
-  border: 1.5px solid #0a1226;
+  color: #111b29;
+  border: 1.5px solid #111b29;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-navy-outline:hover {
-  background-color: #0a1226;
+  background-color: #111b29;
   color: #ffffff;
 }
 

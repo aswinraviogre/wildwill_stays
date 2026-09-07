@@ -2,52 +2,62 @@
 
 import React from "react";
 import { TESTIMONIALS } from "@/data/resortsData";
-import { Star, Quote, ShieldCheck } from "lucide-react";
+import { Star, CheckCircle, Sparkles } from "lucide-react";
 
 export default function Testimonials() {
   return (
-    <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 border-b border-slate-200 relative text-slate-900">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white border border-slate-200 mb-4 shadow-sm">
-            <ShieldCheck className="w-3.5 h-3.5 text-navy-900" />
-            <span className="text-xs font-semibold tracking-[0.2em] text-navy-950 uppercase">
-              Guest Impressions
-            </span>
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#fcfbf8] border-b border-[#ece7de] relative text-[#111b29]">
+      <div className="max-w-7xl mx-auto space-y-12">
+        <div className="text-center max-w-2xl mx-auto">
+          <div className="inline-flex items-center space-x-1.5 text-[#d98e0e] text-xs font-bold uppercase tracking-[0.2em] mb-2">
+            <Sparkles className="w-3.5 h-3.5 text-[#fba919]" />
+            <span>Verified Guest Experiences</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-slate-900">
-            Unforgettable Stories from Our Guests
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-medium text-[#111b29] tracking-tight">
+            Guest Stories & Memories
           </h2>
+          <p className="text-[#666666] text-xs sm:text-sm mt-2 font-light">
+            Read authentic reviews from families, couples, and travelers who experienced our secluded retreats.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {TESTIMONIALS.map((review, idx) => (
             <div
               key={idx}
-              className="bg-white p-8 rounded-3xl border border-slate-200 shadow-lg flex flex-col justify-between relative group hover:border-navy-950 transition-all hover:shadow-xl"
+              className="saf-card p-6 sm:p-7 flex flex-col justify-between relative group hover:border-[#fba919] transition-all"
             >
-              <Quote className="w-10 h-10 text-navy-100 absolute top-6 right-6" />
-
-              <div className="space-y-4 relative z-10">
-                {/* 5-Star Rating */}
-                <div className="flex space-x-1 text-amber-500">
-                  {[...Array(review.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-amber-500" />
-                  ))}
+              <div className="space-y-4">
+                {/* 5-Star Rating in Saffron Gold */}
+                <div className="flex items-center justify-between">
+                  <div className="flex space-x-1 text-[#fba919]">
+                    {[...Array(review.rating)].map((_, i) => (
+                      <Star key={i} className="w-4 h-4 fill-[#fba919]" />
+                    ))}
+                  </div>
+                  <span className="inline-flex items-center space-x-1 text-[10px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                    <CheckCircle className="w-3 h-3" />
+                    <span>Verified Stay</span>
+                  </span>
                 </div>
 
-                <p className="text-slate-700 text-sm sm:text-base leading-relaxed italic font-light">
+                <p className="text-[#333333] text-xs sm:text-sm leading-relaxed italic font-light">
                   &ldquo;{review.quote}&rdquo;
                 </p>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-slate-100 relative z-10">
-                <div className="font-semibold text-slate-900 text-base">
-                  {review.name}
+              <div className="pt-5 mt-5 border-t border-[#ece7de] flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-full bg-[#fff6e6] border border-[#fba919]/30 flex items-center justify-center font-serif font-bold text-sm text-[#d98e0e]">
+                  {review.name.charAt(0)}
                 </div>
-                <div className="flex items-center justify-between text-xs text-slate-500 mt-1">
-                  <span className="text-navy-900 font-semibold">{review.stayedAt}</span>
-                  <span>{review.date}</span>
+                <div className="flex-1 min-w-0">
+                  <div className="font-semibold text-[#111b29] text-sm truncate">
+                    {review.name}
+                  </div>
+                  <div className="flex items-center justify-between text-xs text-[#666666]">
+                    <span className="text-[#2d66a1] font-medium truncate">{review.stayedAt}</span>
+                    <span className="shrink-0">{review.date}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -57,3 +67,4 @@ export default function Testimonials() {
     </section>
   );
 }
+
