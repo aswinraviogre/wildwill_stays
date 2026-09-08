@@ -14,7 +14,6 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [estatesDropdownOpen, setEstatesDropdownOpen] = useState(false);
-  const [destinationsDropdownOpen, setDestinationsDropdownOpen] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -26,119 +25,61 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleBookNow = (resortSlug?: string) => {
-    setMobileMenuOpen(false);
-    if (onOpenBooking) {
-      onOpenBooking(resortSlug);
-    } else {
-      window.dispatchEvent(new CustomEvent("open-booking-modal", { detail: { resortSlug } }));
-    }
-  };
-
   return (
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
           isScrolled
-            ? "bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.06)] border-b border-[#ece7de] py-3.5"
-            : "bg-white/90 backdrop-blur-sm border-b border-[#ece7de]/80 py-4.5"
+            ? "bg-white/95 backdrop-blur-md shadow-[0_4px_20px_rgba(0,0,0,0.06)] border-b border-[#ece7de] py-3"
+            : "bg-white/90 backdrop-blur-sm border-b border-[#ece7de]/80 py-4"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between">
-            {/* Left: Brand Logo in SaffronStays Typography */}
+            {/* Left: Brand Logo */}
             <Link
               href="/"
-              className="group flex flex-col items-start focus:outline-none"
+              className="group flex flex-col items-start focus:outline-none transition-transform active:scale-[0.99]"
             >
               <div className="flex items-center space-x-1.5">
                 <span className="text-xl sm:text-2xl font-serif tracking-[0.18em] text-[#111b29] font-bold">
                   WILDVILL
                 </span>
-                <span className="w-2 h-2 rounded-full bg-[#fba919] inline-block" />
+                <span className="w-2 h-2 rounded-full bg-[#fba919] inline-block shadow-sm" />
               </div>
-              <span className="text-[9px] sm:text-[10px] tracking-[0.28em] text-[#666666] uppercase font-medium">
+              <span className="text-[9px] sm:text-[10px] tracking-[0.26em] text-[#666666] uppercase font-medium mt-0.5">
                 LUXURY VILLAS & ESTATES • WAYANAD
               </span>
             </Link>
 
-            {/* Center: Desktop Navigation with SaffronStays hover underlines */}
-            <nav className="hidden lg:flex items-center space-x-8">
-              {/* Destinations Dropdown */}
-              <div
-                className="relative group"
-                onMouseEnter={() => setDestinationsDropdownOpen(true)}
-                onMouseLeave={() => setDestinationsDropdownOpen(false)}
-              >
-                <button className="relative flex items-center space-x-1 text-sm font-medium text-[#111b29] py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100">
-                  <span>Destinations</span>
-                  <ChevronDown className="w-4 h-4 opacity-60 group-hover:rotate-180 transition-transform duration-300 text-[#111b29]" />
-                </button>
-
-                <div
-                  className={`absolute top-full left-1/2 -translate-x-1/2 w-80 pt-2 transition-all duration-300 origin-top ${
-                    destinationsDropdownOpen
-                      ? "opacity-100 scale-100 pointer-events-auto"
-                      : "opacity-0 scale-95 pointer-events-none"
-                  }`}
-                >
-                  <div className="bg-white p-4 rounded-2xl border border-[#ece7de] shadow-[0_20px_40px_rgba(17,27,41,0.12)] space-y-2">
-                    <div className="text-[11px] font-semibold uppercase tracking-wider text-[#666666] px-2">
-                      Wayanad Regions
-                    </div>
-                    <Link
-                      href="/resorts/mist-meadows"
-                      className="block p-2.5 rounded-xl hover:bg-[#fff6e6] transition-colors"
-                    >
-                      <div className="flex items-center text-sm font-medium text-[#111b29]">
-                        <MapPin className="w-3.5 h-3.5 text-[#fba919] mr-2" />
-                        <span>Meppadi Valley</span>
-                      </div>
-                      <p className="text-xs text-[#666666] ml-5">40-acre coffee & stream estate</p>
-                    </Link>
-                    <Link
-                      href="/resorts/whispering-woods"
-                      className="block p-2.5 rounded-xl hover:bg-[#fff6e6] transition-colors"
-                    >
-                      <div className="flex items-center text-sm font-medium text-[#111b29]">
-                        <MapPin className="w-3.5 h-3.5 text-[#fba919] mr-2" />
-                        <span>Chembra Foothills</span>
-                      </div>
-                      <p className="text-xs text-[#666666] ml-5">Canopy glass chalet & mist trails</p>
-                    </Link>
-                    <Link
-                      href="/resorts/cloud-peak"
-                      className="block p-2.5 rounded-xl hover:bg-[#fff6e6] transition-colors"
-                    >
-                      <div className="flex items-center text-sm font-medium text-[#111b29]">
-                        <MapPin className="w-3.5 h-3.5 text-[#fba919] mr-2" />
-                        <span>Vythiri Heights</span>
-                      </div>
-                      <p className="text-xs text-[#666666] ml-5">3,200 ft cliffside infinity pool</p>
-                    </Link>
-                  </div>
-                </div>
-              </div>
-
+            {/* Center: Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-10">
               {/* The Estates Dropdown */}
               <div
-                className="relative group"
+                className="relative group py-2"
                 onMouseEnter={() => setEstatesDropdownOpen(true)}
                 onMouseLeave={() => setEstatesDropdownOpen(false)}
               >
-                <button className="relative flex items-center space-x-1 text-sm font-medium text-[#111b29] py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100">
+                <button
+                  className="relative flex items-center space-x-1.5 text-sm font-medium text-[#111b29] py-1 transition-colors hover:text-[#2d66a1] focus:outline-none after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100"
+                  aria-expanded={estatesDropdownOpen}
+                >
                   <span>Our Stays</span>
                   <ChevronDown className="w-4 h-4 opacity-60 group-hover:rotate-180 transition-transform duration-300 text-[#111b29]" />
                 </button>
 
+                {/* Dropdown Menu Container */}
                 <div
-                  className={`absolute top-full left-1/2 -translate-x-1/2 w-88 pt-2 transition-all duration-300 origin-top ${
+                  className={`absolute top-full left-1/2 -translate-x-1/2 w-[360px] pt-3 transition-all duration-300 origin-top ${
                     estatesDropdownOpen
                       ? "opacity-100 scale-100 pointer-events-auto"
                       : "opacity-0 scale-95 pointer-events-none"
                   }`}
                 >
-                  <div className="bg-white p-3.5 rounded-2xl border border-[#ece7de] shadow-[0_20px_40px_rgba(17,27,41,0.12)] space-y-1.5">
+                  <div className="bg-white p-3.5 rounded-2xl border border-[#ece7de] shadow-[0_20px_40px_rgba(17,27,41,0.12)] space-y-1.5 backdrop-blur-md">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-[#999999] px-2.5 pt-1 pb-0.5">
+                      Private Wayanad Estates
+                    </div>
                     {RESORTS_DATA.map((resort) => (
                       <Link
                         key={resort.id}
@@ -162,69 +103,41 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                 </div>
               </div>
 
-              <Link
-                href="/experiences"
-                className={`relative text-sm font-medium py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                  pathname === "/experiences"
-                    ? "text-[#2d66a1] font-semibold after:scale-x-100"
-                    : "text-[#111b29] hover:text-[#2d66a1]"
-                }`}
-              >
-                Experiences
-              </Link>
-
+              {/* Gallery Link */}
               <Link
                 href="/gallery"
-                className={`relative text-sm font-medium py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100 ${
+                className={`relative text-sm font-medium py-1 transition-colors hover:text-[#2d66a1] after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100 ${
                   pathname === "/gallery"
                     ? "text-[#2d66a1] font-semibold after:scale-x-100"
-                    : "text-[#111b29] hover:text-[#2d66a1]"
+                    : "text-[#111b29]"
                 }`}
               >
                 Gallery
               </Link>
-
-              <Link
-                href="/contact"
-                className={`relative text-sm font-medium py-2 transition-colors after:absolute after:-bottom-0.5 after:left-0 after:h-0.5 after:w-full after:origin-center after:scale-x-0 after:rounded-full after:bg-[#fba919] after:transition-transform after:duration-300 hover:after:scale-x-100 ${
-                  pathname === "/contact"
-                    ? "text-[#2d66a1] font-semibold after:scale-x-100"
-                    : "text-[#111b29] hover:text-[#2d66a1]"
-                }`}
-              >
-                Contact
-              </Link>
             </nav>
 
-            {/* Right: Direct Call & SaffronStays Signature Blue Pill Button */}
-            <div className="flex items-center space-x-5">
+            {/* Right: Direct Call & Mobile Hamburger */}
+            <div className="flex items-center justify-end space-x-2.5 sm:space-x-3.5">
               <a
                 href="tel:+919526459920"
-                className="hidden md:flex items-center space-x-2 text-sm font-medium text-[#111b29] hover:text-[#2d66a1] transition-colors"
+                className="inline-flex items-center justify-center space-x-2 sm:space-x-2.5 h-9 sm:h-10 px-3 sm:px-4 rounded-full bg-[#fff6e6] hover:bg-[#ffeed1] border border-[#fba919]/40 text-[#111b29] transition-all shadow-xs hover:shadow-sm active:scale-95 group shrink-0"
                 title="Call Wildvill Reservations"
               >
-                <div className="w-8 h-8 rounded-full bg-[#fff6e6] border border-[#fba919]/30 flex items-center justify-center text-[#fba919]">
-                  <Phone className="w-4 h-4" />
+                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white shadow-xs flex items-center justify-center text-[#d98e0e] shrink-0 group-hover:scale-105 transition-transform">
+                  <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </div>
-                <span className="hidden xl:inline tracking-tight font-semibold text-xs">
+                <span className="tracking-tight text-xs sm:text-sm font-semibold whitespace-nowrap leading-none">
                   +91 95264 59920
                 </span>
               </a>
 
-              <button
-                onClick={() => handleBookNow()}
-                className="btn-saf-blue px-6 py-2.5 text-xs sm:text-sm font-semibold tracking-wide transition-transform hover:scale-105 active:scale-95 flex items-center space-x-1.5"
-              >
-                <span>Book Stays</span>
-              </button>
-
               {/* Mobile Hamburger Toggle */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-[#111b29] hover:text-[#2d66a1] focus:outline-none"
+                className="lg:hidden h-9 w-9 sm:h-10 sm:w-10 flex items-center justify-center rounded-full text-[#111b29] hover:bg-[#fff6e6] hover:text-[#2d66a1] transition-colors focus:outline-none shrink-0"
                 aria-label="Toggle Navigation Menu"
               >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+                {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
               </button>
             </div>
           </div>
@@ -263,70 +176,28 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
               </button>
             </div>
 
-            <nav className="flex flex-col space-y-1.5">
+            <nav className="flex flex-col space-y-2">
               <Link
-                href="/"
+                href="/about"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-semibold text-[#111b29] p-2 rounded-xl hover:bg-[#fff6e6] transition-colors"
+                className="text-sm font-semibold text-[#111b29] p-3 rounded-xl hover:bg-[#fff6e6] transition-colors flex items-center justify-between"
               >
-                Home
-              </Link>
-
-              <div className="pt-2 text-[11px] font-bold uppercase tracking-wider text-[#999] px-2">
-                Our Private Estates
-              </div>
-              {RESORTS_DATA.map((resort) => (
-                <Link
-                  key={resort.id}
-                  href={`/resorts/${resort.slug}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="flex items-center justify-between p-2 rounded-xl hover:bg-[#fff6e6] text-sm text-[#111b29] transition-colors"
-                >
-                  <div>
-                    <div className="font-serif font-medium">{resort.name}</div>
-                    <div className="text-[11px] text-[#666]">{resort.location}</div>
-                  </div>
-                  <span className="text-xs font-semibold text-[#2d66a1]">{resort.startingPrice}</span>
-                </Link>
-              ))}
-
-              <div className="pt-3 text-[11px] font-bold uppercase tracking-wider text-[#999] px-2">
-                Explore More
-              </div>
-              <Link
-                href="/experiences"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-[#111b29] p-2 rounded-xl hover:bg-[#fff6e6] transition-colors"
-              >
-                Curated Experiences
-              </Link>
-              <Link
-                href="/gallery"
-                onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-[#111b29] p-2 rounded-xl hover:bg-[#fff6e6] transition-colors"
-              >
-                Photo Gallery
+                <span>About Us</span>
               </Link>
               <Link
                 href="/contact"
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-[#111b29] p-2 rounded-xl hover:bg-[#fff6e6] transition-colors"
+                className="text-sm font-semibold text-[#111b29] p-3 rounded-xl hover:bg-[#fff6e6] transition-colors flex items-center justify-between"
               >
-                Contact & Reservations
+                <span>Contact</span>
               </Link>
             </nav>
           </div>
 
-          <div className="pt-6 border-t border-[#ece7de] space-y-3">
-            <button
-              onClick={() => handleBookNow()}
-              className="btn-saf-blue w-full py-3.5 text-center text-sm shadow-md"
-            >
-              Book Stays
-            </button>
+          <div className="pt-6 border-t border-[#ece7de]">
             <a
               href="tel:+919526459920"
-              className="flex items-center justify-center space-x-2 w-full py-2.5 text-xs text-[#111b29] border border-[#ece7de] rounded-full hover:bg-slate-50 font-medium"
+              className="flex items-center justify-center space-x-2 w-full py-3 text-xs text-[#111b29] border border-[#ece7de] rounded-full hover:bg-slate-50 font-medium"
             >
               <Phone className="w-3.5 h-3.5 text-[#fba919]" />
               <span>Direct Concierge: +91 95264 59920</span>
