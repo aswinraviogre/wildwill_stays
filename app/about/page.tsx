@@ -15,6 +15,7 @@ import {
   Trees,
   Phone
 } from "lucide-react";
+import { CONTACT_CONFIG, buildWhatsAppUrl } from "@/constants/contact";
 
 export default function AboutPage() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -166,13 +167,13 @@ export default function AboutPage() {
               Contact Reservations
             </Link>
             <a
-              href="https://wa.me/919526459920"
+              href={buildWhatsAppUrl()}
               target="_blank"
               rel="noreferrer"
               className="btn-saf-outline w-full sm:w-auto px-8 py-3.5 text-xs sm:text-sm font-semibold bg-white/10 text-white border-white/20 hover:bg-white hover:text-[#111b29] transition-all flex items-center justify-center space-x-2"
             >
               <Phone className="w-4 h-4 text-[#fba919]" />
-              <span>WhatsApp Concierge: +91 95264 59920</span>
+              <span>WhatsApp Concierge: {CONTACT_CONFIG.displayPhone}</span>
             </a>
           </div>
         </div>

@@ -3,8 +3,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, Phone, ChevronDown, MapPin } from "lucide-react";
+import { Menu, X, Phone, ChevronDown, MapPin, MessageSquare } from "lucide-react";
 import { RESORTS_DATA } from "@/data/resortsData";
+import { CONTACT_CONFIG, buildWhatsAppUrl } from "@/constants/contact";
 
 interface NavbarProps {
   onOpenBooking?: (resortSlug?: string) => void;
@@ -89,9 +90,8 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                         <div className="text-[10px] font-semibold uppercase tracking-wider text-[#d98e0e]">
                           {resort.badge}
                         </div>
-                        <div className="text-sm font-serif font-semibold text-[#111b29] group-hover/item:text-[#2d66a1] flex items-center justify-between">
+                        <div className="text-sm font-serif font-semibold text-[#111b29] group-hover/item:text-[#2d66a1]">
                           <span>{resort.name}</span>
-                          <span className="text-xs font-sans text-[#111b29] font-medium">Starts {resort.startingPrice}</span>
                         </div>
                         <div className="text-xs text-[#666666] truncate mt-0.5 flex items-center">
                           <MapPin className="w-3 h-3 text-[#999] mr-1 shrink-0" />
@@ -116,10 +116,23 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
               </Link>
             </nav>
 
-            {/* Right: Direct Call & Mobile Hamburger */}
-            <div className="flex items-center justify-end space-x-2.5 sm:space-x-3.5">
+            {/* Right: WhatsApp Chat & Direct Call & Mobile Hamburger */}
+            <div className="flex items-center justify-end space-x-2 sm:space-x-3">
               <a
-                href="tel:+919526459920"
+                href={buildWhatsAppUrl()}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center justify-center space-x-1.5 sm:space-x-2 h-9 sm:h-10 px-3 sm:px-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white transition-all shadow-xs hover:shadow-sm active:scale-95 group shrink-0"
+                title="Chat on WhatsApp"
+              >
+                <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
+                <span className="hidden sm:inline tracking-tight text-xs sm:text-sm font-semibold whitespace-nowrap leading-none">
+                  WhatsApp
+                </span>
+              </a>
+
+              <a
+                href={CONTACT_CONFIG.telLink}
                 className="inline-flex items-center justify-center space-x-2 sm:space-x-2.5 h-9 sm:h-10 px-3 sm:px-4 rounded-full bg-[#fff6e6] hover:bg-[#ffeed1] border border-[#fba919]/40 text-[#111b29] transition-all shadow-xs hover:shadow-sm active:scale-95 group shrink-0"
                 title="Call Wildvill Reservations"
               >
@@ -127,7 +140,7 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
                   <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                 </div>
                 <span className="tracking-tight text-xs sm:text-sm font-semibold whitespace-nowrap leading-none">
-                  +91 95264 59920
+                  {CONTACT_CONFIG.displayPhone}
                 </span>
               </a>
 
@@ -194,13 +207,22 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
             </nav>
           </div>
 
-          <div className="pt-6 border-t border-[#ece7de]">
+          <div className="pt-6 border-t border-[#ece7de] space-y-2.5">
             <a
-              href="tel:+919526459920"
-              className="flex items-center justify-center space-x-2 w-full py-3 text-xs text-[#111b29] border border-[#ece7de] rounded-full hover:bg-slate-50 font-medium"
+              href={buildWhatsAppUrl()}
+              target="_blank"
+              rel="noreferrer"
+              className="flex items-center justify-center space-x-2 w-full py-3 text-xs text-white bg-[#25D366] hover:bg-[#20ba59] rounded-full font-semibold shadow-xs transition-colors"
+            >
+              <MessageSquare className="w-4 h-4 fill-white" />
+              <span>WhatsApp Enquiry ({CONTACT_CONFIG.displayPhone})</span>
+            </a>
+            <a
+              href={CONTACT_CONFIG.telLink}
+              className="flex items-center justify-center space-x-2 w-full py-3 text-xs text-[#111b29] border border-[#ece7de] rounded-full hover:bg-slate-50 font-medium transition-colors"
             >
               <Phone className="w-3.5 h-3.5 text-[#fba919]" />
-              <span>Direct Concierge: +91 95264 59920</span>
+              <span>Direct Call: {CONTACT_CONFIG.displayPhone}</span>
             </a>
           </div>
         </div>

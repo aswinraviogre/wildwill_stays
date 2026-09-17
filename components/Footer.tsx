@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { MapPin, Phone, Mail, Sparkles, ArrowRight } from "lucide-react";
 import { RESORTS_DATA } from "@/data/resortsData";
+import { CONTACT_CONFIG, buildWhatsAppUrl } from "@/constants/contact";
 
 export default function Footer() {
   return (
@@ -26,12 +27,12 @@ export default function Footer() {
             </Link>
 
             <p className="text-xs sm:text-sm text-slate-300 max-w-sm leading-relaxed font-light">
-              Wildvill Stays curates secluded private estates in Wayanad, Kerala. Featuring private heated jacuzzis, cantilevered forest canopies, and cliffside infinity pools with 5-star private butler hospitality.
+              Wildvill Stays curates secluded private estates in Wayanad, Kerala. Featuring private heated jacuzzis, cantilevered forest canopies, and stone nature trails with 5-star private butler hospitality.
             </p>
 
             <div className="pt-2 flex items-center space-x-3">
               <a
-                href="https://wa.me/919526459920"
+                href={buildWhatsAppUrl()}
                 target="_blank"
                 rel="noreferrer"
                 className="btn-saffron px-4 py-2 text-xs flex items-center space-x-2"
@@ -39,10 +40,10 @@ export default function Footer() {
                 <span>WhatsApp Concierge</span>
               </a>
               <a
-                href="tel:+919526459920"
+                href={CONTACT_CONFIG.telLink}
                 className="px-4 py-2 rounded-full border border-white/20 text-xs font-semibold text-white hover:border-[#fba919] transition-colors"
               >
-                Call: +91 95264 59920
+                Call: {CONTACT_CONFIG.displayPhone}
               </a>
             </div>
           </div>
@@ -54,18 +55,13 @@ export default function Footer() {
             </h4>
             <ul className="space-y-2 text-xs sm:text-sm text-slate-400">
               <li>
-                <Link href="/resorts/mist-meadows" className="hover:text-[#fba919] transition-colors">
-                  Meppadi Coffee Valley
+                <Link href="/resorts/geo-greens" className="hover:text-[#fba919] transition-colors">
+                  Geo Greens Sanctuary
                 </Link>
               </li>
               <li>
                 <Link href="/resorts/whispering-woods" className="hover:text-[#fba919] transition-colors">
                   Chembra Foothills
-                </Link>
-              </li>
-              <li>
-                <Link href="/resorts/cloud-peak" className="hover:text-[#fba919] transition-colors">
-                  Vythiri Cloud Heights
                 </Link>
               </li>
               <li>

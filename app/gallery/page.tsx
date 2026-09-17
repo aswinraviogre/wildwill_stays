@@ -10,7 +10,7 @@ import { Sparkles, Maximize2, X, ChevronLeft, ChevronRight, Camera } from "lucid
 interface GalleryPhoto {
   url: string;
   title: string;
-  category: "all" | "mist-meadows" | "whispering-woods" | "cloud-peak" | "villas" | "dining";
+  category: "all" | "geo-greens" | "whispering-woods" | "villas" | "dining";
   location: string;
 }
 
@@ -47,68 +47,36 @@ const GALLERY_PHOTOS: GalleryPhoto[] = [
     location: "Wildvill Whispering Woods"
   },
 
-  // Mist & Meadows Photos
+  // Geo Greens Photos
   {
-    url: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1200&q=80",
-    title: "Morning Mist Rising Over Meppadi Coffee Estate",
-    category: "mist-meadows",
-    location: "Wildvill Mist & Meadows"
+    url: "/images/geo-greens/villa-exterior-night.jpg",
+    title: "Illuminated Night Facade & Private Lawn",
+    category: "geo-greens",
+    location: "Wildvill Geo Greens"
   },
   {
-    url: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
-    title: "Private Heated Jacuzzi on Coffee Balcony",
+    url: "/images/geo-greens/living-room-lounge.jpg",
+    title: "Spacious Living Lounge & Open Dining Area",
     category: "villas",
-    location: "Wildvill Mist & Meadows"
+    location: "Wildvill Geo Greens"
   },
   {
-    url: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
-    title: "Heritage Teakwood Cottage Living Space",
+    url: "/images/geo-greens/indoor-swing-recreation.jpg",
+    title: "Traditional Wooden Swing & Carrom Recreation Lounge",
+    category: "geo-greens",
+    location: "Wildvill Geo Greens"
+  },
+  {
+    url: "/images/geo-greens/tv-lounge-interior.jpg",
+    title: "Entertainment Lounge with Teakwood Entrance",
     category: "villas",
-    location: "Wildvill Mist & Meadows"
+    location: "Wildvill Geo Greens"
   },
   {
-    url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
-    title: "Open-Air Spice Pavilion Restaurant",
-    category: "dining",
-    location: "Wildvill Mist & Meadows"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
-    title: "Natural Freshwater Stream Crossing",
-    category: "mist-meadows",
-    location: "Wildvill Mist & Meadows"
-  },
-
-  // Cloud Peak Photos
-  {
-    url: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80",
-    title: "Cliff-Edge Heated Infinity Pool",
-    category: "cloud-peak",
-    location: "Wildvill Cloud Peak"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
-    title: "Sky Infinity Plunge Suite",
+    url: "/images/geo-greens/modern-bathroom.jpg",
+    title: "Contemporary Washroom with Hot Water Shower",
     category: "villas",
-    location: "Wildvill Cloud Peak"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80",
-    title: "Panoramic Master Suite Above Clouds",
-    category: "villas",
-    location: "Wildvill Cloud Peak"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1200&q=80",
-    title: "The Horizon Cliff Grill at Sunset",
-    category: "dining",
-    location: "Wildvill Cloud Peak"
-  },
-  {
-    url: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1200&q=80",
-    title: "Sunset Gazebo Overlooking Western Ghats",
-    category: "cloud-peak",
-    location: "Wildvill Cloud Peak"
+    location: "Wildvill Geo Greens"
   }
 ];
 
@@ -120,12 +88,11 @@ export default function GalleryPage() {
   const filtered =
     activeCategory === "all"
       ? GALLERY_PHOTOS
-      : GALLERY_PHOTOS.filter(
-          (p) =>
-            p.category === activeCategory ||
-            (activeCategory === "villas" && p.category === "villas") ||
-            (activeCategory === "dining" && p.category === "dining")
-        );
+      : GALLERY_PHOTOS.filter((p) => {
+          if (activeCategory === "geo-greens") return p.location.includes("Geo Greens");
+          if (activeCategory === "whispering-woods") return p.location.includes("Whispering Woods");
+          return p.category === activeCategory;
+        });
 
   return (
     <main className="min-h-screen bg-white text-slate-900 selection:bg-navy-950 selection:text-white">
@@ -144,7 +111,7 @@ export default function GalleryPage() {
           </h1>
 
           <p className="text-slate-600 text-sm sm:text-base max-w-xl mx-auto font-light leading-relaxed">
-            Discover the quiet morning mist of our coffee estates, cantilevered timber chalets, and infinity horizons across our Wayanad collection.
+            Discover the quiet morning mist of our coffee estates, cantilevered timber chalets, and lush valley horizons across our Wayanad collection.
           </p>
 
           {/* Filter Tabs */}
@@ -152,8 +119,7 @@ export default function GalleryPage() {
             {[
               { id: "all", label: "All Photos" },
               { id: "whispering-woods", label: "Whispering Woods" },
-              { id: "mist-meadows", label: "Mist & Meadows" },
-              { id: "cloud-peak", label: "Cloud Peak" },
+              { id: "geo-greens", label: "Geo Greens" },
               { id: "villas", label: "Suites & Chalets" },
               { id: "dining", label: "Dining & Culinary" }
             ].map((tab) => (

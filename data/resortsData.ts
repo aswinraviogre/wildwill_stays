@@ -46,109 +46,113 @@ export interface Resort {
 
 export const RESORTS_DATA: Resort[] = [
   {
-    id: "mist-meadows",
-    slug: "mist-meadows",
-    name: "Wildvill Mist & Meadows",
-    tagline: "Serene Plantation Sanctuary in the Heart of Wayanad",
-    badge: "Valley & Plantation Retreat",
-    location: "Meppadi, Wayanad, Kerala",
-    elevation: "2,600 ft Above Sea Level",
+    id: "geo-greens",
+    slug: "geo-greens",
+    name: "Wildvill Geo Greens",
+    tagline: "Private 3-BHK Luxury Pool Villa with Indoor Swing Lounge & Lush Lawn",
+    badge: "Private Pool Villa",
+    location: "Wayanad, Kerala",
+    elevation: "2,400 ft Above Sea Level",
     startingPrice: "₹8,500",
-    heroImage: "https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=1920&q=85",
+    heroImage: "/images/geo-greens/villa-exterior-night.jpg",
     gallery: [
-      "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1578683010236-d716f9a3f461?auto=format&fit=crop&w=1200&q=80"
+      "/images/geo-greens/villa-exterior-night.jpg",
+      "/images/geo-greens/living-room-lounge.jpg",
+      "/images/geo-greens/indoor-swing-recreation.jpg",
+      "/images/geo-greens/tv-lounge-interior.jpg",
+      "/images/geo-greens/modern-bathroom.jpg"
     ],
     shortDescription:
-      "Nestled amid 40 acres of organic coffee and cardamom estates, Mist & Meadows offers private heated jacuzzis, babbling natural streams, and secluded colonial cottages enveloped in morning mist.",
+      "A serene 3-bedroom, 3-washroom private sanctuary featuring an exclusive swimming pool, fully equipped kitchen, air conditioning, high-speed Wi-Fi, 24/7 hot water, indoor recreation swing, and free parking.",
     fullDescription:
-      "Awaken to the gentle melody of Malabar whistling thrushes and the aroma of freshly roasted coffee. Wildvill Mist & Meadows blends traditional Kerala architecture with bespoke luxury amenities. Each cottage opens up to emerald plantation vistas, private wooden verandas, and curated nature trails that lead to secluded natural streams within the property.",
-    accentColor: "#38bdf8",
+      "Experience blissful seclusion at Wildvill Geo Greens, a private 3-bedroom, 3-washroom luxury retreat crafted for families and groups. Unwind in the private swimming pool, relax in the spacious living hall with plush sectional seating, enjoy casual games on the traditional indoor wooden swing and carrom board, and savor homemade feasts in the fully equipped kitchen. With continuous hot water, high-speed Wi-Fi, full air conditioning, and dedicated private parking, Geo Greens is your ultimate tranquil haven in Wayanad.",
+    accentColor: "#10b981",
     amenities: [
       {
-        name: "Private Heated Jacuzzi",
-        description: "Outdoor warm jacuzzi overlooking cardamom groves",
-        iconName: "Bath"
-      },
-      {
-        name: "Coffee Estate Trails",
-        description: "Guided morning estate walks & bean-to-cup coffee tasting",
-        iconName: "Compass"
-      },
-      {
-        name: "Natural Stream Access",
-        description: "Private pristine freshwater stream running through the retreat",
+        name: "Swimming Pool",
+        description: "Private outdoor swimming pool for exclusive guest relaxation",
         iconName: "Waves"
       },
       {
-        name: "Farm-to-Table Malabar Dining",
-        description: "Authentic culinary heritage crafted with local spices & organic herbs",
+        name: "Equipped Kitchen",
+        description: "Full private kitchen setup for home cooking and dining convenience",
         iconName: "UtensilsCrossed"
       },
       {
-        name: "Campfire & Starry Deck",
-        description: "Evening acoustic fireplace gatherings under starlit skies",
-        iconName: "Flame"
+        name: "Air Conditioned",
+        description: "Air conditioning installed across all bedrooms and living spaces",
+        iconName: "Wind"
       },
       {
-        name: "Ayurvedic Wellness Spa",
-        description: "Traditional herbal massages and holistic rejuvenation therapies",
-        iconName: "Sparkles"
+        name: "High-Speed Wi-Fi",
+        description: "Reliable high-speed wireless internet for workations and streaming",
+        iconName: "Wifi"
+      },
+      {
+        name: "24/7 Hot Water",
+        description: "Continuous hot water showers across all 3 washrooms",
+        iconName: "Bath"
+      },
+      {
+        name: "Free On-Site Parking",
+        description: "Dedicated complimentary private vehicle parking on villa grounds",
+        iconName: "Car"
+      },
+      {
+        name: "Indoor Swing & Games",
+        description: "Traditional ceiling swing and carrom board for leisurely family moments",
+        iconName: "Compass"
       }
     ],
     rooms: [
       {
-        id: "plantation-jacuzzi-villa",
-        name: "Plantation Jacuzzi Villa",
-        tagline: "Private outdoor jacuzzi with panoramic valley mist views",
+        id: "master-pool-bedroom",
+        name: "Master Pool-View Bedroom",
+        tagline: "Air-conditioned master suite with private attached washroom & hot water",
         capacity: "2-3 Guests",
-        size: "780 sq.ft",
-        pricePerNight: "₹11,500",
-        image: "https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&w=800&q=80",
-        features: ["King Bed", "Private Heated Jacuzzi", "Open Sky Shower", "Coffee Balcony", "Complimentary Breakfast"]
+        size: "420 sq.ft",
+        pricePerNight: "₹8,500",
+        image: "/images/geo-greens/villa-exterior-night.jpg",
+        features: ["King Size Bed", "Attached Modern Washroom", "24/7 Hot Water Shower", "Air Conditioning", "Lawn & Pool View"]
       },
       {
-        id: "heritage-colonial-cottage",
-        name: "Heritage Colonial Cottage",
-        tagline: "Teakwood interiors & private veranda facing spice gardens",
-        capacity: "2-4 Guests",
-        size: "950 sq.ft",
-        pricePerNight: "₹14,000",
-        image: "https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=800&q=80",
-        features: ["2 King Beds", "Teakwood Living Room", "Garden Patio", "Mini Bar", "Butler Service"]
+        id: "deluxe-family-bedroom",
+        name: "Deluxe Family Bedroom",
+        tagline: "Spacious air-conditioned room with private attached washroom",
+        capacity: "2-3 Guests",
+        size: "380 sq.ft",
+        pricePerNight: "₹8,500",
+        image: "/images/geo-greens/living-room-lounge.jpg",
+        features: ["King Size Bed", "Attached Washroom", "Hot Water Facility", "Air Conditioning", "Wardrobe & Vanity"]
       },
       {
-        id: "stream-side-chalet",
-        name: "Stream-Side Glass Chalet",
-        tagline: "Floor-to-ceiling glass looking straight into natural waters",
-        capacity: "2 Guests",
-        size: "650 sq.ft",
-        pricePerNight: "₹9,500",
-        image: "https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80",
-        features: ["King Bed", "Sound of Flowing Stream", "Glass View Deck", "Espresso Station", "Hammock"]
+        id: "comfort-suite-bedroom",
+        name: "Comfort Bedroom Suite",
+        tagline: "Cozy bedroom with dedicated modern washroom and AC",
+        capacity: "2-3 Guests",
+        size: "360 sq.ft",
+        pricePerNight: "₹8,500",
+        image: "/images/geo-greens/indoor-swing-recreation.jpg",
+        features: ["Queen Bed", "Dedicated Modern Washroom", "Hot Water Shower", "Air Conditioning", "Quiet Garden View"]
       }
     ],
     diningHighlight: {
-      title: "The Spice Pavilion",
+      title: "Private Villa Kitchen & Dining",
       description:
-        "An open-air dining sanctuary suspended above the coffee groves, serving slow-cooked Malabar Biryani, fresh river fish curry, and handcrafted wood-fired delights.",
-      image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=80",
-      specialties: ["Authentic Malabar Fish Curry", "Appam with Vegetable Stew", "Spiced Pepper Roast", "Artisanal Pour-Over Coffee"]
+        "Enjoy total culinary freedom with a fully equipped kitchen featuring cookware, refrigeration, and a spacious dining hall overlooking the open veranda.",
+      image: "/images/geo-greens/living-room-lounge.jpg",
+      specialties: ["Self-Catering Cooking Facilities", "Spacious Family Dining Hall", "Barbecue Setup Upon Request", "Local Wayanad Chef On Demand"]
     },
     experiences: [
       {
-        title: "Estate Coffee Cupping & Roasting",
-        description: "Participate in harvesting, drying, and brewing single-origin Robusta & Arabica with master plantation growers.",
-        image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=800&q=80"
+        title: "Private Poolside Relaxation",
+        description: "Take refreshing dips under the open sky and unwind on the grassy lawn surrounding the private pool.",
+        image: "/images/geo-greens/villa-exterior-night.jpg"
       },
       {
-        title: "Midnight Stargazing & Barbecue",
-        description: "Private barbecue setup on your wooden deck beside cozy crackling embers under unpolluted mountain skies.",
-        image: "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=800&q=80"
+        title: "Indoor Recreation & Swing Evenings",
+        description: "Bond over classic carrom board tournaments and relax on the suspended traditional wooden swing.",
+        image: "/images/geo-greens/indoor-swing-recreation.jpg"
       }
     ]
   },
@@ -257,113 +261,6 @@ export const RESORTS_DATA: Resort[] = [
         image: "/images/whispering-woods/boulder-forest-lawn.jpg"
       }
     ]
-  },
-  {
-    id: "cloud-peak",
-    slug: "cloud-peak",
-    name: "Wildvill Cloud Peak",
-    tagline: "Dramatic Cliffside Luxury Overlooking the Western Ghats",
-    badge: "Cliff & Panoramic View Retreat",
-    location: "Vythiri Heights, Wayanad, Kerala",
-    elevation: "3,800 ft Above Sea Level",
-    startingPrice: "₹11,000",
-    heroImage: "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1920&q=85",
-    gallery: [
-      "https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1544984243-ec57ea16fe25?auto=format&fit=crop&w=1200&q=80",
-      "https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?auto=format&fit=crop&w=1200&q=80"
-    ],
-    shortDescription:
-      "Perched on a dramatic cliff edge above the cloud line, Cloud Peak features a heated infinity pool that merges with the horizon, cantilevered viewing decks, and ultra-modern glass villas.",
-    fullDescription:
-      "Witness jaw-dropping sunrises where rolling sea of clouds flow underneath your feet. Wildvill Cloud Peak is designed for the discerning traveler seeking seclusion, dramatic architectural vistas, and bespoke service. Enjoy your infinity pool overlooking deep Western Ghats valleys, private sunset gazebos, and gourmet high-altitude dining.",
-    accentColor: "#60a5fa",
-    amenities: [
-      {
-        name: "Cliff-Edge Infinity Pool",
-        description: "Temperature-regulated infinity pool with infinite mountain horizons",
-        iconName: "Eye"
-      },
-      {
-        name: "Floating Cloud Decks",
-        description: "Cantilevered glass decks suspended over 1,000-foot valley drops",
-        iconName: "Mountain"
-      },
-      {
-        name: "Sunset Gazebo & Lounge",
-        description: "Curated sundowners and artisanal cocktails with panoramic views",
-        iconName: "Wine"
-      },
-      {
-        name: "Private Chef & Fine Dining",
-        description: "Custom multi-course dining tailored to your palate",
-        iconName: "ChefHat"
-      },
-      {
-        name: "High-Altitude Yoga Pavillion",
-        description: "Morning guided meditation and prana sessions above the clouds",
-        iconName: "Sun"
-      },
-      {
-        name: "High-Speed Optical Wi-Fi",
-        description: "Uninterrupted connectivity for remote executive retreats",
-        iconName: "Wifi"
-      }
-    ],
-    rooms: [
-      {
-        id: "sky-infinity-suite",
-        name: "Sky Infinity Suite",
-        tagline: "Direct private plunge pool and 180-degree cliffside glass vistas",
-        capacity: "2 Guests",
-        size: "920 sq.ft",
-        pricePerNight: "₹16,500",
-        image: "https://images.unsplash.com/photo-1540541338287-41700207dee6?auto=format&fit=crop&w=800&q=80",
-        features: ["King Bed", "Private Plunge Pool", "Glass Cantilever Balcony", "Sunset View Bath", "Complimentary High Tea"]
-      },
-      {
-        id: "cloud-summit-chalet",
-        name: "Cloud Summit Chalet",
-        tagline: "Two-story luxury residence atop the highest cliff vantage point",
-        capacity: "4-6 Guests",
-        size: "1,450 sq.ft",
-        pricePerNight: "₹24,000",
-        image: "https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=800&q=80",
-        features: ["2 Master Suites", "Spacious Living Room", "Private Fire Pit", "Dedicated Butler", "All-Inclusive Dining"]
-      },
-      {
-        id: "horizon-glass-room",
-        name: "Horizon Glass Room",
-        tagline: "Romantic glass-walled cocoon gazing into emerald mountain ridges",
-        capacity: "2 Guests",
-        size: "700 sq.ft",
-        pricePerNight: "₹12,500",
-        image: "https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80",
-        features: ["King Bed", "Rainforest Shower", "Private Sun Deck", "Telescope for Stargazing", "Breakfast in Bed"]
-      }
-    ],
-    diningHighlight: {
-      title: "The Horizon Cliff Grill",
-      description:
-        "Dine on the edge of the world. Freshly grilled delicacies, fusion Kerala curries, and handpicked wines paired with unmatched sunset colors.",
-      image: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1000&q=80",
-      specialties: ["Charcoal Grilled Prawns", "Slow Braised Cardamom Lamb", "Kerala Red Rice Bowls", "Flambéed Tropical Desserts"]
-    },
-    experiences: [
-      {
-        title: "Private Chembra Peak Helicopter / Trek",
-        description: "Custom guided trekking to the heart-shaped lake or scenic valley vantage flights.",
-        image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80"
-      },
-      {
-        title: "Sunrise Cloud Walk & Yoga",
-        description: "Gentle morning walk into the mist followed by energizing breathing exercises above the fog line.",
-        image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80"
-      }
-    ]
   }
 ];
 
@@ -397,16 +294,16 @@ export const WAYANAD_HIGHLIGHTS = [
 export const TESTIMONIALS = [
   {
     name: "Arjun & Priyanka Sharma",
-    stayedAt: "Wildvill Mist & Meadows",
+    stayedAt: "Wildvill Geo Greens",
     date: "February 2026",
-    quote: "The private jacuzzi in the coffee plantation was pure magic. The food was hands-down the best Malabar cuisine we've ever tasted. Wildvill sets a new benchmark for boutique luxury in Kerala!",
+    quote: "Geo Greens was unbelievable! Having the entire 3-bedroom villa with private swimming pool, equipped kitchen, and AC made our family holiday in Wayanad pure relaxation. The indoor swing was a huge favorite!",
     rating: 5
   },
   {
     name: "Dr. Vikram & Sneha Nair",
-    stayedAt: "Wildvill Cloud Peak",
+    stayedAt: "Wildvill Whispering Woods",
     date: "January 2026",
-    quote: "Standing on the cliff edge infinity pool while the clouds rolled beneath us was a dream. The service was extraordinarily attentive and discrete. We are already booking our return trip.",
+    quote: "Staying in the cantilevered glass chalet among the ancient trees and granite boulders was pure serenity. The attentive private butler service and starlit barbecue made our anniversary extraordinary.",
     rating: 5
   },
   {
@@ -417,3 +314,4 @@ export const TESTIMONIALS = [
     rating: 5
   }
 ];
+

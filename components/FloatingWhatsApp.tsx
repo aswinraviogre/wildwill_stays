@@ -1,13 +1,11 @@
 "use client";
 
 import React from "react";
+import { buildWhatsAppUrl } from "@/constants/contact";
 
 export default function FloatingWhatsApp() {
-  const rawNumber = "919526459920";
-
   const handleDirectChat = () => {
-    const text = encodeURIComponent("Hello Wildvill Concierge! I would like to inquire about booking a stay in Wayanad.");
-    window.open(`https://wa.me/${rawNumber}?text=${text}`, "_blank");
+    window.open(buildWhatsAppUrl(), "_blank");
   };
 
   return (

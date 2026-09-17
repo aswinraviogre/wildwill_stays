@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { X, Calendar, Sparkles, Send, CheckCircle2, MessageSquare } from "lucide-react";
 import { RESORTS_DATA } from "@/data/resortsData";
+import { buildWhatsAppUrl } from "@/constants/contact";
 
 interface BookingModalProps {
   isOpen?: boolean;
@@ -22,8 +23,6 @@ export default function BookingModal({ isOpen: propIsOpen, onClose, defaultResor
   const [email, setEmail] = useState("");
   const [specialOccasion, setSpecialOccasion] = useState("Relaxation & Leisure");
   const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const conciergeWhatsAppNumber = "919526459920";
 
   // Sync with prop if provided
   useEffect(() => {
@@ -79,8 +78,7 @@ export default function BookingModal({ isOpen: propIsOpen, onClose, defaultResor
 
 Please share current villa availability, customized packages, and direct booking rates.`;
 
-    const encodedMessage = encodeURIComponent(message);
-    const whatsappUrl = `https://wa.me/${conciergeWhatsAppNumber}?text=${encodedMessage}`;
+    const whatsappUrl = buildWhatsAppUrl(message);
     
     setIsSubmitted(true);
     setTimeout(() => {

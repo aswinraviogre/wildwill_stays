@@ -9,8 +9,8 @@ import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
-import Link from "next/link";
-import { Sparkles, ShieldCheck, Utensils, Compass, Users, Heart, ArrowRight, Phone } from "lucide-react";
+import { Sparkles, ShieldCheck, Utensils, Compass, Users, Heart, Phone } from "lucide-react";
+import { CONTACT_CONFIG, buildWhatsAppUrl } from "@/constants/contact";
 
 export default function HomePage() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -100,103 +100,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* SaffronStays Thematic Collections (Stay By Occasion) */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#fcfbf8] relative border-b border-[#ece7de]">
-        <div className="max-w-7xl mx-auto space-y-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-            <div>
-              <div className="inline-flex items-center space-x-1.5 text-[#d98e0e] text-xs font-bold uppercase tracking-[0.2em] mb-2">
-                <Sparkles className="w-3.5 h-3.5 text-[#fba919]" />
-                <span>Handcrafted Selections</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-serif font-medium text-[#111b29] tracking-tight">
-                Curated Collections for Every Occasion
-              </h2>
-            </div>
-            <Link
-              href="/gallery"
-              className="group inline-flex items-center space-x-2 text-xs font-semibold uppercase tracking-wider text-[#111b29] hover:text-[#2d66a1] transition-colors"
-            >
-              <span>Explore All Collections</span>
-              <ArrowRight className="w-4 h-4 text-[#111b29] group-hover:text-[#2d66a1] group-hover:translate-x-1 transition-transform" />
-            </Link>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {/* Theme 1 */}
-            <Link
-              href="/resorts/mist-meadows"
-              className="saf-card overflow-hidden group relative h-72 flex flex-col justify-end p-6 border border-[#ece7de]"
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
-                style={{
-                  backgroundImage:
-                    "url(https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=800&q=80)"
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#111b29] via-[#111b29]/40 to-transparent" />
-              <div className="relative z-10 text-white space-y-1">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#fba919]">
-                  Coffee Valley Sanctuary
-                </span>
-                <h3 className="text-xl font-serif font-medium">Romantic & Wellness Escapes</h3>
-                <p className="text-xs text-white/80 font-light">
-                  Heated jacuzzis, private stream picnics & spa therapies.
-                </p>
-              </div>
-            </Link>
-
-            {/* Theme 2 */}
-            <Link
-              href="/resorts/whispering-woods"
-              className="saf-card overflow-hidden group relative h-72 flex flex-col justify-end p-6 border border-[#ece7de]"
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
-                style={{
-                  backgroundImage:
-                    "url(https://images.unsplash.com/photo-1510798831971-661eb04b3739?auto=format&fit=crop&w=800&q=80)"
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#111b29] via-[#111b29]/40 to-transparent" />
-              <div className="relative z-10 text-white space-y-1">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#fba919]">
-                  Canopy Glasshouse
-                </span>
-                <h3 className="text-xl font-serif font-medium">Nature & Architecture Lovers</h3>
-                <p className="text-xs text-white/80 font-light">
-                  Cantilevered glass structures nestled in ancient evergreen canopies.
-                </p>
-              </div>
-            </Link>
-
-            {/* Theme 3 */}
-            <Link
-              href="/resorts/cloud-peak"
-              className="saf-card overflow-hidden group relative h-72 flex flex-col justify-end p-6 border border-[#ece7de]"
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 ease-out group-hover:scale-105"
-                style={{
-                  backgroundImage:
-                    "url(https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=800&q=80)"
-                }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#111b29] via-[#111b29]/40 to-transparent" />
-              <div className="relative z-10 text-white space-y-1">
-                <span className="text-[10px] uppercase font-bold tracking-widest text-[#fba919]">
-                  Cliffside Infinity Pool
-                </span>
-                <h3 className="text-xl font-serif font-medium">Celebrations & Group Stays</h3>
-                <p className="text-xs text-white/80 font-light">
-                  Infinity pool floating over misty valleys at 3,200 ft.
-                </p>
-              </div>
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* Curated Wayanad Immersion */}
       <CuratedExperiences />
@@ -225,16 +129,16 @@ export default function HomePage() {
               onClick={() => handleOpenBooking()}
               className="btn-saffron w-full sm:w-auto px-8 py-3.5 text-xs sm:text-sm font-semibold shadow-md active:scale-95"
             >
-              Check Availability & Rates
+              Check Availability & Book
             </button>
             <a
-              href="https://wa.me/919526459920"
+              href={buildWhatsAppUrl()}
               target="_blank"
               rel="noreferrer"
               className="btn-saf-outline w-full sm:w-auto px-8 py-3.5 text-xs sm:text-sm font-semibold bg-white/10 text-white border-white/20 hover:bg-white hover:text-[#111b29] transition-all flex items-center justify-center space-x-2"
             >
               <Phone className="w-4 h-4 text-[#fba919]" />
-              <span>WhatsApp Concierge: +91 95264 59920</span>
+              <span>WhatsApp Concierge: {CONTACT_CONFIG.displayPhone}</span>
             </a>
           </div>
         </div>

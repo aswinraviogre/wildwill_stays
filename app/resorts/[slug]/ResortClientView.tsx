@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Resort, RESORTS_DATA } from "@/data/resortsData";
@@ -8,11 +8,11 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
+import WhatsAppEnquiryCard from "@/components/WhatsAppEnquiryCard";
 import {
   Sparkles,
   MapPin,
   Calendar,
-  Users,
   Maximize2,
   CheckCircle2,
   ArrowRight,
@@ -22,7 +22,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight as ChevronRightIcon,
-  Phone
+  Phone,
+  MessageSquare
 } from "lucide-react";
 
 interface ResortClientViewProps {
@@ -44,6 +45,27 @@ export default function ResortClientView({ resort }: ResortClientViewProps) {
     setCurrentLightboxIndex(index);
     setLightboxOpen(true);
   };
+
+  const scrollToEnquiry = () => {
+    const el = document.getElementById("enquiry-form");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (window.location.hash === "#enquiry-form" || window.location.search.includes("enquire=true")) {
+        const timer = setTimeout(() => {
+          const el = document.getElementById("enquiry-form");
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth" });
+          }
+        }, 350);
+        return () => clearTimeout(timer);
+      }
+    }
+  }, []);
 
   const otherResorts = RESORTS_DATA.filter((r) => r.id !== resort.id);
 
@@ -86,18 +108,15 @@ export default function ResortClientView({ resort }: ResortClientViewProps) {
                 <Compass className="w-4 h-4 text-sky-400" />
                 <span>{resort.elevation}</span>
               </div>
-              <span>•</span>
-              <div className="text-white font-semibold">
-                Rates from <span className="text-sky-300">{resort.startingPrice}</span> / night
-              </div>
             </div>
 
             <div className="flex flex-wrap gap-3 pt-4">
               <button
-                onClick={() => handleOpenBooking()}
-                className="px-8 py-3.5 rounded-full bg-white hover:bg-slate-100 text-navy-950 font-semibold text-sm shadow-xl transition-all hover:scale-105"
+                onClick={scrollToEnquiry}
+                className="px-8 py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-sm shadow-xl transition-all hover:scale-105 flex items-center space-x-2"
               >
-                Check Availability & Book
+                <MessageSquare className="w-4 h-4 fill-white text-white" />
+                <span>Send Enquiry</span>
               </button>
               <button
                 onClick={() => openLightbox(0)}
@@ -170,88 +189,7 @@ export default function ResortClientView({ resort }: ResortClientViewProps) {
         </div>
       </section>
 
-      {/* Villas & Suites Showcase */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-slate-50 relative border-b border-slate-200">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center max-w-2xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-[0.25em] text-navy-950">
-              Accommodation Options
-            </span>
-            <h2 className="text-3xl sm:text-5xl font-serif font-bold text-slate-900 mt-2">
-              Villas & Luxury Suites
-            </h2>
-            <p className="text-slate-600 mt-3 text-sm sm:text-base">
-              Each residence features custom teakwood craftsmanship, private viewing decks, and discrete butler support.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {resort.rooms.map((room) => (
-              <div
-                key={room.id}
-                className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-lg flex flex-col justify-between group hover:shadow-2xl hover:border-navy-950 transition-all"
-              >
-                <div>
-                  {/* Room Cover Image */}
-                  <div className="relative h-64 overflow-hidden">
-                    <div
-                      className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                      style={{ backgroundImage: `url(${room.image})` }}
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-navy-950/80 via-transparent to-transparent" />
-                    <div className="absolute top-4 right-4 px-3 py-1 rounded-full bg-navy-950/90 text-white text-xs font-bold">
-                      {room.pricePerNight} <span className="text-[10px] text-slate-400 font-normal">/ night</span>
-                    </div>
-                  </div>
-
-                  {/* Room Details */}
-                  <div className="p-6 space-y-4">
-                    <div className="flex items-center space-x-3 text-xs text-slate-500">
-                      <div className="flex items-center space-x-1">
-                        <Users className="w-3.5 h-3.5 text-navy-950" />
-                        <span>{room.capacity}</span>
-                      </div>
-                      <span>•</span>
-                      <div className="flex items-center space-x-1">
-                        <Maximize2 className="w-3.5 h-3.5 text-navy-950" />
-                        <span>{room.size}</span>
-                      </div>
-                    </div>
-
-                    <h3 className="text-2xl font-serif font-bold text-slate-900 group-hover:text-navy-900 transition-colors">
-                      {room.name}
-                    </h3>
-
-                    <p className="text-xs sm:text-sm text-slate-600 font-light leading-relaxed">
-                      {room.tagline}
-                    </p>
-
-                    {/* Features List */}
-                    <div className="space-y-2 pt-2 border-t border-slate-100">
-                      {room.features.map((feat, fIdx) => (
-                        <div key={fIdx} className="flex items-center space-x-2 text-xs text-slate-700">
-                          <span className="w-1.5 h-1.5 rounded-full bg-navy-950 shrink-0" />
-                          <span>{feat}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Booking Button in Navy */}
-                <div className="p-6 pt-0">
-                  <button
-                    onClick={() => handleOpenBooking(`${room.name} at ${resort.name}`)}
-                    className="w-full py-3.5 rounded-xl bg-navy-950 hover:bg-navy-900 text-white font-semibold text-xs uppercase tracking-wider shadow-md transition-all hover:shadow-lg"
-                  >
-                    Reserve This Villa
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Dining Spotlight */}
       <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white relative border-b border-slate-200">
@@ -347,6 +285,13 @@ export default function ResortClientView({ resort }: ResortClientViewProps) {
         </div>
       </section>
 
+      {/* Direct WhatsApp Enquiry Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#fcfbf8] border-b border-slate-200">
+        <div className="max-w-4xl mx-auto">
+          <WhatsAppEnquiryCard resortName={resort.name} resortSlug={resort.slug} />
+        </div>
+      </section>
+
       {/* Explore Other Retreats in the Collection */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
@@ -355,11 +300,11 @@ export default function ResortClientView({ resort }: ResortClientViewProps) {
               The Wildvill Collection
             </span>
             <h2 className="text-2xl sm:text-3xl font-serif font-bold text-slate-900 mt-1">
-              Explore Our Other Signature Retreats
+              Explore Our Sister Retreat
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="max-w-xl mx-auto">
             {otherResorts.map((other) => (
               <Link
                 key={other.id}
@@ -380,7 +325,7 @@ export default function ResortClientView({ resort }: ResortClientViewProps) {
                     {other.name}
                   </h3>
                   <div className="flex items-center justify-between text-xs text-slate-300 pt-2">
-                    <span>Starts {other.startingPrice} / night</span>
+                    <span>{other.location}</span>
                     <span className="flex items-center space-x-1 text-sky-300">
                       <span>Explore</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

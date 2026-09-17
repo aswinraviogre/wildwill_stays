@@ -18,10 +18,11 @@ import {
   ArrowRight,
   ShieldCheck
 } from "lucide-react";
+import { CONTACT_CONFIG, buildWhatsAppUrl } from "@/constants/contact";
 
 interface ExperienceItem {
   id: string;
-  category: "all" | "plantation" | "cliffside" | "culinary" | "landmarks";
+  category: "all" | "plantation" | "culinary" | "landmarks";
   title: string;
   tagline: string;
   duration: string;
@@ -60,30 +61,17 @@ const EXPERIENCES_DATA: ExperienceItem[] = [
     included: ["Resident naturalist escort", "Binoculars for birdwatching", "Freshly brewed herbal tea"]
   },
   {
-    id: "estate-cupping",
-    category: "plantation",
-    title: "Bean-to-Cup Coffee Roasting & Cupping",
-    tagline: "Single-origin Robusta & Arabica harvesting and brewing mastery.",
-    duration: "1.5 Hours",
-    bestTime: "10:00 AM & 4:00 PM",
-    location: "Wildvill Mist & Meadows",
-    image: "https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1200&q=80",
+    id: "poolside-relaxation",
+    category: "culinary",
+    title: "Private Poolside Relaxation & Lawn Evenings",
+    tagline: "Exclusive private swimming pool dips and leisurely lawn evenings in total privacy.",
+    duration: "Flexible",
+    bestTime: "Morning & Late Afternoon",
+    location: "Wildvill Geo Greens",
+    image: "/images/geo-greens/villa-exterior-night.jpg",
     description:
-      "Discover the heritage of Wayanad coffee cultivation. Walk the berry rows, handpick beans during harvest season, roast over open fire, and participate in a guided coffee cupping masterclass.",
-    included: ["Coffee masterclass", "Tasting 4 artisanal roasts", "Fresh beans souvenir pouch"]
-  },
-  {
-    id: "cloud-yoga",
-    category: "cliffside",
-    title: "Sunrise Cloud Walk & Prana Yoga",
-    tagline: "High-altitude breathing and meditation suspended above the Western Ghats fog.",
-    duration: "1 Hour",
-    bestTime: "6:15 AM (Dawn)",
-    location: "Wildvill Cloud Peak",
-    image: "https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=1200&q=80",
-    description:
-      "Awaken your senses above the clouds on the cantilevered glass viewing deck at Cloud Peak. Guided pranayama and gentle yoga flows accompanied by panoramic morning valley sunrises.",
-    included: ["Yoga mats & props", "Certified yoga instructor", "Warm detox turmeric & ginger elixir"]
+      "Enjoy the luxury of your own private swimming pool at Geo Greens. Take refreshing dips under the open sky, lounge on the grassy lawn, and relax in the indoor swing and recreation space.",
+    included: ["Exclusive private pool access", "Lawn loungers & outdoor seating", "Indoor swing & recreation"]
   },
   {
     id: "private-deck-barbecue",
@@ -92,7 +80,7 @@ const EXPERIENCES_DATA: ExperienceItem[] = [
     tagline: "Candlelit multi-course grill feast prepared beside crackling embers on your private veranda.",
     duration: "2 - 3 Hours",
     bestTime: "Evening (7:30 PM)",
-    location: "Available at All 3 Properties",
+    location: "Available at Both Properties",
     image: "https://images.unsplash.com/photo-1470246973918-29a93221c455?auto=format&fit=crop&w=1200&q=80",
     description:
       "A tailored private culinary celebration. Fresh mountain river fish, marinated meats or spiced paneer skewers grilled live by your personal chef beside your outdoor campfire.",
@@ -153,7 +141,6 @@ export default function ExperiencesPage() {
             {[
               { id: "all", label: "All Experiences" },
               { id: "plantation", label: "Plantation & Forests" },
-              { id: "cliffside", label: "Cliffside & Wellness" },
               { id: "culinary", label: "Culinary & Stargazing" },
               { id: "landmarks", label: "Wayanad Icons" }
             ].map((tab) => (
@@ -254,12 +241,12 @@ export default function ExperiencesPage() {
           </p>
           <div className="pt-4">
             <a
-              href="https://wa.me/919526459920?text=Hello%20Wildvill%20Concierge!%20I%20would%20like%20to%20plan%20a%20tailored%20Wayanad%20itinerary."
+              href={buildWhatsAppUrl("Hello Wildvill Concierge! I would like to plan a tailored Wayanad itinerary.")}
               target="_blank"
               rel="noreferrer"
               className="inline-block px-8 py-3.5 rounded-full bg-emerald-600 text-white font-semibold text-sm hover:bg-emerald-700 transition-all hover:scale-105 shadow-xl"
             >
-              Chat on WhatsApp (+91 95264 59920)
+              Chat on WhatsApp ({CONTACT_CONFIG.displayPhone})
             </a>
           </div>
         </div>
@@ -273,7 +260,7 @@ export default function ExperiencesPage() {
       <BookingModal
         isOpen={bookingModalOpen}
         onClose={() => setBookingModalOpen(false)}
-        defaultResortSlug={selectedExperience ? "mist-meadows" : undefined}
+        defaultResortSlug={selectedExperience ? "geo-greens" : undefined}
       />
     </main>
   );

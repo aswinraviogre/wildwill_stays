@@ -18,6 +18,7 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { RESORTS_DATA } from "@/data/resortsData";
+import { CONTACT_CONFIG, buildWhatsAppUrl } from "@/constants/contact";
 
 export default function ContactPage() {
   const [bookingModalOpen, setBookingModalOpen] = useState(false);
@@ -40,7 +41,7 @@ export default function ContactPage() {
 • *Preferred Property:* ${selectedResort}
 • *Note / Query:* ${formData.message}`;
 
-    const url = `https://wa.me/919526459920?text=${encodeURIComponent(text)}`;
+    const url = buildWhatsAppUrl(text);
     setSubmitted(true);
     setTimeout(() => {
       window.open(url, "_blank");
@@ -87,7 +88,7 @@ export default function ContactPage() {
             <div className="space-y-4">
               {/* WhatsApp Card */}
               <a
-                href="https://wa.me/919526459920"
+                href={buildWhatsAppUrl()}
                 target="_blank"
                 rel="noreferrer"
                 className="flex items-start space-x-4 p-5 rounded-2xl bg-white border-2 border-emerald-500 hover:border-emerald-600 transition-all group shadow-md"
@@ -100,7 +101,7 @@ export default function ContactPage() {
                     Instant WhatsApp Concierge
                   </div>
                   <div className="text-base font-semibold text-slate-900 group-hover:text-emerald-700 transition-colors">
-                    +91 95264 59920
+                    {CONTACT_CONFIG.displayPhone}
                   </div>
                   <div className="text-xs text-slate-500 mt-0.5">
                     Live responses within 5 minutes for availability & quotes
@@ -117,8 +118,8 @@ export default function ContactPage() {
                   <div className="text-xs font-bold uppercase tracking-wider text-navy-950">
                     Direct Front Desk & Reservations
                   </div>
-                  <a href="tel:+919526459920" className="text-base font-semibold text-slate-900 hover:text-navy-900">
-                    +91 95264 59920
+                  <a href={CONTACT_CONFIG.telLink} className="text-base font-semibold text-slate-900 hover:text-navy-900">
+                    {CONTACT_CONFIG.displayPhone}
                   </a>
                   <div className="text-xs text-slate-500 mt-0.5">
                     Mon - Sun: 7:00 AM - 11:00 PM IST
