@@ -116,28 +116,28 @@ export default function Navbar({ onOpenBooking }: NavbarProps) {
               </Link>
             </nav>
 
-            {/* Right: WhatsApp Chat & Direct Call & Mobile Hamburger */}
+            {/* Right: WhatsApp Chat & Direct Call (Desktop) & Mobile Hamburger */}
             <div className="flex items-center justify-end space-x-2 sm:space-x-3">
               <a
                 href={buildWhatsAppUrl()}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center justify-center space-x-1.5 sm:space-x-2 h-9 sm:h-10 px-3 sm:px-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white transition-all shadow-xs hover:shadow-sm active:scale-95 group shrink-0"
+                className="hidden lg:inline-flex items-center justify-center space-x-2 h-10 px-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white transition-all shadow-xs hover:shadow-sm active:scale-95 group shrink-0"
                 title="Chat on WhatsApp"
               >
-                <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-white text-white" />
-                <span className="hidden sm:inline tracking-tight text-xs sm:text-sm font-semibold whitespace-nowrap leading-none">
+                <MessageSquare className="w-4 h-4 fill-white text-white" />
+                <span className="tracking-tight text-xs sm:text-sm font-semibold whitespace-nowrap leading-none">
                   WhatsApp
                 </span>
               </a>
 
               <a
                 href={CONTACT_CONFIG.telLink}
-                className="inline-flex items-center justify-center space-x-2 sm:space-x-2.5 h-9 sm:h-10 px-3 sm:px-4 rounded-full bg-[#fff6e6] hover:bg-[#ffeed1] border border-[#fba919]/40 text-[#111b29] transition-all shadow-xs hover:shadow-sm active:scale-95 group shrink-0"
+                className="hidden lg:inline-flex items-center justify-center space-x-2.5 h-10 px-4 rounded-full bg-[#fff6e6] hover:bg-[#ffeed1] border border-[#fba919]/40 text-[#111b29] transition-all shadow-xs hover:shadow-sm active:scale-95 group shrink-0"
                 title="Call Wildvill Reservations"
               >
-                <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full bg-white shadow-xs flex items-center justify-center text-[#d98e0e] shrink-0 group-hover:scale-105 transition-transform">
-                  <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                <div className="w-6 h-6 rounded-full bg-white shadow-xs flex items-center justify-center text-[#d98e0e] shrink-0 group-hover:scale-105 transition-transform">
+                  <Phone className="w-3.5 h-3.5" />
                 </div>
                 <span className="tracking-tight text-xs sm:text-sm font-semibold whitespace-nowrap leading-none">
                   {CONTACT_CONFIG.displayPhone}
