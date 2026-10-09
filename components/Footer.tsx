@@ -15,7 +15,7 @@ export default function Footer() {
 
           {/* Col 1 & 2: Brand & Mission */}
           <div className="lg:col-span-2 space-y-4">
-            <BrandLogo variant="light" />
+            <BrandLogo variant="light" size="large" />
 
             <p className="text-xs sm:text-sm text-[#b8b0a2] max-w-sm leading-relaxed font-light">
               Wildvill Stays curates secluded private retreats across Wayanad, Ooty, and Coorg. Experience glass chalets, private pool villas, and misty nature trails managed with thoughtful personalized hospitality.
