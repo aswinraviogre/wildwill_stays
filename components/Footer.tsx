@@ -9,7 +9,7 @@ import BrandLogo from "@/components/BrandLogo";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#172419] text-[#e0dad0] pt-16 pb-28 sm:pb-14 px-4 sm:px-6 lg:px-8 border-t border-[#2d3f30]">
+    <footer className="bg-[#134d37] text-[#e0dad0] pt-16 pb-28 sm:pb-14 px-4 sm:px-6 lg:px-8 border-t border-[#1f6349]">
       <div className="max-w-7xl mx-auto space-y-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
 
