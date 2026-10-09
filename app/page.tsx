@@ -5,8 +5,6 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import DestinationSection from "@/components/DestinationSection";
 import ThoughtfullyChosen from "@/components/ThoughtfullyChosen";
-import CuratedExperiences from "@/components/CuratedExperiences";
-import Testimonials from "@/components/Testimonials";
 import Footer from "@/components/Footer";
 import BookingModal from "@/components/BookingModal";
 import FloatingWhatsApp from "@/components/FloatingWhatsApp";
@@ -103,12 +101,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Curated Experiences */}
-      <CuratedExperiences />
-
-      {/* Guest Reviews */}
-      <Testimonials />
 
       {/* Direct Concierge Banner */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-[#FAF7F2] relative overflow-hidden">
