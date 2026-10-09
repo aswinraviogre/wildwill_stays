@@ -90,7 +90,8 @@ export default function GalleryPage() {
       ? GALLERY_PHOTOS
       : GALLERY_PHOTOS.filter((p) => {
           if (activeCategory === "geo-greens") return p.location.includes("Geo Greens");
-          if (activeCategory === "whispering-woods") return p.location.includes("Whispering Woods");
+          if (activeCategory === "whispering-woods")
+            return p.location.includes("Whispering Woods") || p.location.includes("Crocolake");
           return p.category === activeCategory;
         });
 
@@ -118,7 +119,7 @@ export default function GalleryPage() {
           <div className="flex flex-wrap justify-center gap-2 pt-6">
             {[
               { id: "all", label: "All Photos" },
-              { id: "whispering-woods", label: "Whispering Woods" },
+              { id: "whispering-woods", label: "Crocolake Hut Resort" },
               { id: "geo-greens", label: "Geo Greens" },
               { id: "villas", label: "Suites & Chalets" },
               { id: "dining", label: "Dining & Culinary" }

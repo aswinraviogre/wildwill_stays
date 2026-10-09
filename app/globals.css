@@ -1,42 +1,48 @@
 @import "tailwindcss";
 
 @theme {
-  --color-saffron: #fba919;
-  --color-saffron-light: #fff6e6;
-  --color-saffron-dark: #d98e0e;
-  --color-saf-blue: #2d66a1;
-  --color-saf-blue-hover: #225182;
-  --color-saf-dark: #111b29;
-  --color-saf-border: #ece7de;
-  --color-saf-border-light: #f4f0e8;
-  --color-saf-bg: #fcfbf8;
-  --color-saf-muted: #666666;
+  --color-warm-cream: #FAF7F2;
+  --color-warm-border: #E8E2D5;
+  --color-warm-dark: #1D2B1F;
+  --color-warm-gold: #C29053;
+  --color-warm-amber: #B58742;
+  --color-warm-muted: #5E665D;
 
-  --color-navy-950: #050a17;
-  --color-navy-900: #0a1226;
-  --color-navy-850: #0e1935;
-  --color-navy-800: #132247;
-  --color-navy-700: #1a2f5e;
-  --color-navy-600: #254285;
-  --color-navy-500: #3b66b8;
-  --color-gold-400: #e2c08d;
-  --color-gold-500: #c5a880;
-  --color-gold-600: #a9885c;
-  --color-ice-100: #f0f6fc;
-  --color-ice-200: #e2ecf9;
+  --color-saffron: #c29053;
+  --color-saffron-light: #f7f0e4;
+  --color-saffron-dark: #b58742;
+  --color-saf-blue: #233a29;
+  --color-saf-blue-hover: #1b2e20;
+  --color-saf-dark: #1d2b1f;
+  --color-saf-border: #e8e2d5;
+  --color-saf-border-light: #f2ece1;
+  --color-saf-bg: #faf7f2;
+  --color-saf-muted: #5e665d;
+
+  --color-navy-950: #172419;
+  --color-navy-900: #1d2b1f;
+  --color-navy-850: #233527;
+  --color-navy-800: #2a3f2e;
+  --color-navy-700: #344d39;
+  --color-navy-600: #426049;
+  --color-navy-500: #55795e;
+  --color-gold-400: #e2ba84;
+  --color-gold-500: #c29053;
+  --color-gold-600: #b58742;
+  --color-ice-100: #f7f5ef;
+  --color-ice-200: #ece7da;
   --font-sans: 'Inter', 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-serif: 'Lora', 'Playfair Display', Georgia, 'Times New Roman', serif;
 }
 
 :root {
-  --bg-primary: #fcfbf8;
+  --bg-primary: #FAF7F2;
   --bg-secondary: #ffffff;
   --card-bg: #ffffff;
-  --text-primary: #111b29;
-  --text-muted: #666666;
-  --accent-saffron: #fba919;
-  --accent-blue: #2d66a1;
-  --border-color: #ece7de;
+  --text-primary: #1D2B1F;
+  --text-muted: #5E665D;
+  --accent-gold: #C29053;
+  --border-color: #E8E2D5;
 }
 
 html {
@@ -44,8 +50,8 @@ html {
 }
 
 body {
-  background-color: #fcfbf8;
-  color: #111b29;
+  background-color: #FAF7F2;
+  color: #1D2B1F;
   font-family: var(--font-sans);
   overflow-x: hidden;
 }
@@ -83,10 +89,10 @@ body {
 
 @keyframes pulseGlow {
   0%, 100% {
-    box-shadow: 0 0 15px rgba(10, 18, 38, 0.2);
+    box-shadow: 0 0 15px rgba(194, 144, 83, 0.2);
   }
   50% {
-    box-shadow: 0 0 30px rgba(10, 18, 38, 0.35);
+    box-shadow: 0 0 30px rgba(194, 144, 83, 0.4);
   }
 }
 
@@ -116,124 +122,61 @@ body {
   animation: floatSlow 6s ease-in-out infinite;
 }
 
-/* SaffronStays Brand Buttons & Cards */
-.btn-saf-blue {
-  background-color: #2d66a1;
+/* Brand Buttons & Cards */
+.btn-gold {
+  background-color: #c29053;
   color: #ffffff;
   border-radius: 9999px;
   font-weight: 600;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 14px rgba(45, 102, 161, 0.25);
+  box-shadow: 0 4px 14px rgba(194, 144, 83, 0.25);
 }
 
-.btn-saf-blue:hover {
-  background-color: #225182;
-  box-shadow: 0 6px 20px rgba(45, 102, 161, 0.35);
+.btn-gold:hover {
+  background-color: #ad7e43;
+  box-shadow: 0 6px 20px rgba(194, 144, 83, 0.35);
   transform: translateY(-1px);
 }
 
-.btn-saffron {
-  background-color: #fba919;
-  color: #111b29;
+.btn-forest {
+  background-color: #1b2b1f;
+  color: #f4efe6;
   border-radius: 9999px;
   font-weight: 600;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 14px rgba(251, 169, 25, 0.28);
+  border: 1px solid rgba(194, 144, 83, 0.4);
 }
 
-.btn-saffron:hover {
-  background-color: #e59914;
-  box-shadow: 0 6px 20px rgba(251, 169, 25, 0.4);
-  transform: translateY(-1px);
-}
-
-.btn-saf-outline {
-  background-color: transparent;
-  color: #111b29;
-  border: 1px solid #ece7de;
-  border-radius: 9999px;
-  font-weight: 600;
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-saf-outline:hover {
-  border-color: #fba919;
-  background-color: #fff6e6;
-  color: #111b29;
+.btn-forest:hover {
+  background-color: #263c2c;
+  border-color: #e2ba84;
 }
 
 .saf-card {
   background: #ffffff;
-  border: 1px solid #ece7de;
-  border-radius: 16px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  border: 1px solid #e8e2d5;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(23, 36, 25, 0.04);
   transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .saf-card:hover {
-  box-shadow: 0 16px 36px -4px rgba(17, 27, 41, 0.1);
+  box-shadow: 0 16px 36px -4px rgba(23, 36, 25, 0.1);
   border-color: #ded6c9;
   transform: translateY(-3px);
 }
 
-/* Luxury Styling for White Theme & Navy Accents */
-.btn-navy {
-  background-color: #111b29;
-  color: #ffffff;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 10px 25px -5px rgba(17, 27, 41, 0.25);
-}
-
-.btn-navy:hover {
-  background-color: #1a2a40;
-  color: #ffffff;
-  box-shadow: 0 15px 30px -5px rgba(17, 27, 41, 0.35);
-  transform: translateY(-1px);
-}
-
-.btn-navy-outline {
-  background-color: transparent;
-  color: #111b29;
-  border: 1.5px solid #111b29;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.btn-navy-outline:hover {
-  background-color: #111b29;
-  color: #ffffff;
-}
-
-.glass-panel-navy {
-  background: rgba(10, 18, 38, 0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.glass-card-light {
-  background: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 15px 35px -10px rgba(15, 23, 42, 0.07);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glass-card-light:hover {
-  border-color: #0a1226;
-  box-shadow: 0 25px 50px -12px rgba(10, 18, 38, 0.14);
-  transform: translateY(-4px);
-}
-
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 7px;
 }
 ::-webkit-scrollbar-track {
-  background: #f8fafc;
+  background: #faf7f2;
 }
 ::-webkit-scrollbar-thumb {
-  background: #94a3b8;
+  background: #c8bead;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #0a1226;
+  background: #a89d8a;
 }

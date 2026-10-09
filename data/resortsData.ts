@@ -15,6 +15,14 @@ export interface Amenity {
   iconName: string;
 }
 
+export interface HouseRules {
+  checkIn: string;
+  checkOut: string;
+  quietHours: string;
+  poolTiming: string;
+  additionalRules: string[];
+}
+
 export interface Resort {
   id: string;
   slug: string;
@@ -42,6 +50,8 @@ export interface Resort {
     description: string;
     image: string;
   }[];
+  houseRules?: HouseRules;
+  cancellationPolicy?: string;
 }
 
 export const RESORTS_DATA: Resort[] = [
@@ -49,7 +59,7 @@ export const RESORTS_DATA: Resort[] = [
     id: "geo-greens",
     slug: "geo-greens",
     name: "Wildvill Geo Greens",
-    tagline: "Private 3-BHK Luxury Pool Villa with Indoor Swing Lounge & Lush Lawn",
+    tagline: "Premium 3-BHK Luxury Private Pool Villa in Peaceful Wayanad",
     badge: "Private Pool Villa",
     location: "Wayanad, Kerala",
     elevation: "2,400 ft Above Sea Level",
@@ -63,47 +73,110 @@ export const RESORTS_DATA: Resort[] = [
       "/images/geo-greens/modern-bathroom.jpg"
     ],
     shortDescription:
-      "A serene 3-bedroom, 3-washroom private sanctuary featuring an exclusive swimming pool, fully equipped kitchen, air conditioning, high-speed Wi-Fi, 24/7 hot water, indoor recreation swing, and free parking.",
+      "Relax in our premium 3-bedroom villa, thoughtfully designed for families and small groups of friends seeking comfort, privacy, and convenience. Located in a quiet and peaceful area, the villa offers a calm stay while being easily accessible to major tourist attractions and the local town.",
     fullDescription:
-      "Experience blissful seclusion at Wildvill Geo Greens, a private 3-bedroom, 3-washroom luxury retreat crafted for families and groups. Unwind in the private swimming pool, relax in the spacious living hall with plush sectional seating, enjoy casual games on the traditional indoor wooden swing and carrom board, and savor homemade feasts in the fully equipped kitchen. With continuous hot water, high-speed Wi-Fi, full air conditioning, and dedicated private parking, Geo Greens is your ultimate tranquil haven in Wayanad.",
+      "Relax in our premium 3-bedroom villa, thoughtfully designed for families and small groups of friends seeking comfort, privacy, and convenience. Located in a quiet and peaceful area, the villa offers a calm stay while being easily accessible to major tourist attractions and the local town.\n\nSpacious interiors, essential amenities, and a serene setting make it ideal for a comfortable, hassle-free stay. Perfect for guests who value peace, cleanliness, and quality time together.",
     accentColor: "#10b981",
     amenities: [
       {
         name: "Swimming Pool",
-        description: "Private outdoor swimming pool for exclusive guest relaxation",
+        description: "Exclusive private swimming pool for guest relaxation (8 AM – 10 PM)",
         iconName: "Waves"
       },
       {
-        name: "Equipped Kitchen",
-        description: "Full private kitchen setup for home cooking and dining convenience",
-        iconName: "UtensilsCrossed"
-      },
-      {
-        name: "Air Conditioned",
-        description: "Air conditioning installed across all bedrooms and living spaces",
+        name: "Air Conditioning",
+        description: "Full air conditioning installed across bedrooms and living spaces",
         iconName: "Wind"
       },
       {
-        name: "High-Speed Wi-Fi",
+        name: "Barbecue Grill",
+        description: "Dedicated outdoor BBQ grill setup for evening cookouts",
+        iconName: "Flame"
+      },
+      {
+        name: "Kitchen",
+        description: "Full private kitchen setup for self-catering and home cooking",
+        iconName: "UtensilsCrossed"
+      },
+      {
+        name: "Cooking Basics",
+        description: "Pots, pans, oil, salt, pepper and essential kitchen cookware provided",
+        iconName: "UtensilsCrossed"
+      },
+      {
+        name: "Blender",
+        description: "Kitchen blender available for fresh smoothies, juices and shakes",
+        iconName: "UtensilsCrossed"
+      },
+      {
+        name: "Dining Table",
+        description: "Spacious indoor dining table for family meals and gatherings",
+        iconName: "UtensilsCrossed"
+      },
+      {
+        name: "Wifi",
         description: "Reliable high-speed wireless internet for workations and streaming",
         iconName: "Wifi"
       },
       {
-        name: "24/7 Hot Water",
-        description: "Continuous hot water showers across all 3 washrooms",
+        name: "Dedicated Workspace",
+        description: "Comfortable desk setup and seating suited for remote working",
+        iconName: "Laptop"
+      },
+      {
+        name: "TV",
+        description: "Large screen television in the living lounge for entertainment",
+        iconName: "Tv"
+      },
+      {
+        name: "Hot Water",
+        description: "24/7 continuous hot water facility across all washrooms",
         iconName: "Bath"
       },
       {
-        name: "Free On-Site Parking",
-        description: "Dedicated complimentary private vehicle parking on villa grounds",
-        iconName: "Car"
+        name: "Ceiling Fan",
+        description: "High-efficiency cooling ceiling fans in all rooms",
+        iconName: "Wind"
       },
       {
-        name: "Indoor Swing & Games",
-        description: "Traditional ceiling swing and carrom board for leisurely family moments",
-        iconName: "Compass"
+        name: "Clothing Storage",
+        description: "Spacious wardrobes, closets and luggage storage in bedrooms",
+        iconName: "Sparkles"
+      },
+      {
+        name: "Crib",
+        description: "Comfortable infant crib available for families traveling with babies",
+        iconName: "Baby"
+      },
+      {
+        name: "Fire Pit",
+        description: "Open-air campfire pit for cozy starlit evenings on the lawn",
+        iconName: "Flame"
+      },
+      {
+        name: "Hammock",
+        description: "Outdoor relaxation hammock set under tranquil garden shade",
+        iconName: "Sun"
+      },
+      {
+        name: "Free Parking on Premises",
+        description: "Dedicated complimentary on-site private parking for multiple vehicles",
+        iconName: "Car"
       }
     ],
+    houseRules: {
+      checkIn: "2:00 PM",
+      checkOut: "11:00 AM",
+      quietHours: "10:00 PM to 7:00 AM",
+      poolTiming: "8:00 AM to 10:00 PM",
+      additionalRules: [
+        "Alcohol is strictly not allowed inside the swimming pool",
+        "Smoking is strictly prohibited inside the villa bedrooms",
+        "Please keep the premises clean and respect the serene neighborhood"
+      ]
+    },
+    cancellationPolicy:
+      "100% cancellation fee within 3 days of booking date. Free cancellation is permitted up to 3 days prior to your check-in date.",
     rooms: [
       {
         id: "master-pool-bedroom",
@@ -159,11 +232,11 @@ export const RESORTS_DATA: Resort[] = [
   {
     id: "whispering-woods",
     slug: "whispering-woods",
-    name: "Wildvill Whispering Woods",
-    tagline: "Cantilevered Glass Chalets & Stone Pathways in Ancient Forest Groves",
-    badge: "Forest & Glasshouse Sanctuary",
-    location: "Chembra Foothills, Wayanad, Kerala",
-    elevation: "3,100 ft Above Sea Level",
+    name: "Wildvill Crocolake Hut Resort",
+    tagline: "Exclusive 4-Bedroom Private Pool Villa with Lake Views in 10-Acre Plantation",
+    badge: "Lakeview 4-BHK Pool Villa",
+    location: "Wayanad, Kerala",
+    elevation: "2,800 ft Above Sea Level",
     startingPrice: "₹9,500",
     heroImage: "/images/whispering-woods/chalet-exterior.jpg",
     gallery: [
@@ -174,93 +247,156 @@ export const RESORTS_DATA: Resort[] = [
       "/images/whispering-woods/boulder-forest-lawn.jpg"
     ],
     shortDescription:
-      "Perched amidst ancient evergreen forest canopies and granite boulders, Whispering Woods features cantilevered timber-roof glass chalets, stone-paved nature trails, and luxurious two-story private forest residences.",
+      "Escape to an exclusive 4-bedroom private pool villa nestled within a serene 10-acre plantation in Wayanad. Wake up to breathtaking lake views from your private balcony, unwind in spacious interiors, and enjoy complete privacy surrounded by lush greenery. Perfect for families, friends, and celebrations, this is where luxury meets nature for an unforgettable getaway.",
     fullDescription:
-      "Step into an untouched woodland paradise where nature meets modern architectural minimalism. Wildvill Whispering Woods is crafted for guests who crave deep wilderness privacy with refined comforts. Sleep surrounded by floor-to-ceiling glass looking straight into lush tropical canopies, walk along stone pathways lined with ancient boulders, and unwind on expansive private timber decks.",
+      "Escape to an exclusive 4-bedroom private pool villa nestled within a serene 10-acre plantation in Wayanad. Wake up to breathtaking lake views from your private balcony, unwind in spacious interiors, and enjoy complete privacy surrounded by lush greenery.\n\nPerfect for families, friends, and celebrations, this is where luxury meets nature for an unforgettable getaway.",
     accentColor: "#10b981",
     amenities: [
       {
-        name: "Elevated Glasshouse Chalet",
-        description: "Cantilevered chalets with sloping timber roofs and 270° canopy vistas",
-        iconName: "Mountain"
+        name: "Swimming Pool",
+        description: "Exclusive private swimming pool with plantation & lake views (8 AM – 10 PM)",
+        iconName: "Waves"
       },
       {
-        name: "Stone Garden Pathways",
-        description: "Winding stone walkways connecting private villas across manicured emerald lawns",
-        iconName: "Compass"
+        name: "Air Conditioning",
+        description: "Full air conditioning installed across bedrooms and living spaces",
+        iconName: "Wind"
       },
       {
-        name: "Ancient Boulder Forest Lawn",
-        description: "Secluded natural granite formations and tranquil open-air campfire zones",
+        name: "Barbecue Grill",
+        description: "Outdoor BBQ grill setup for evening cookouts by the lake",
         iconName: "Flame"
       },
       {
-        name: "Organic Spiced Gastronomy",
-        description: "Authentic Kerala claypot delicacies crafted with forest herbs and farm produce",
+        name: "Kitchen",
+        description: "Fully equipped private kitchen with refrigerator and appliances",
         iconName: "UtensilsCrossed"
       },
       {
-        name: "Canopy Birdwatching Deck",
-        description: "Private upper deck vantage points for spotting rare Western Ghats bird species",
-        iconName: "Eye"
+        name: "Cooking Basics",
+        description: "Pots, pans, oil, salt, pepper and essential kitchen cookware provided",
+        iconName: "UtensilsCrossed"
       },
       {
-        name: "High-Speed Forest Wi-Fi",
-        description: "Seamless connectivity for workations in absolute natural seclusion",
+        name: "Blender",
+        description: "Kitchen blender available for fresh smoothies, juices and shakes",
+        iconName: "UtensilsCrossed"
+      },
+      {
+        name: "Dining Table",
+        description: "Spacious indoor dining table for family meals and group gatherings",
+        iconName: "UtensilsCrossed"
+      },
+      {
+        name: "Wifi",
+        description: "Reliable high-speed wireless internet throughout the estate",
         iconName: "Wifi"
+      },
+      {
+        name: "Dedicated Workspace",
+        description: "Comfortable desk setup and seating suited for remote work",
+        iconName: "Laptop"
+      },
+      {
+        name: "TV",
+        description: "Large screen television in the living lounge for entertainment",
+        iconName: "Tv"
+      },
+      {
+        name: "Hot Water",
+        description: "24/7 continuous hot water facility across all washrooms",
+        iconName: "Bath"
+      },
+      {
+        name: "Ceiling Fan",
+        description: "High-efficiency cooling ceiling fans in all bedrooms and halls",
+        iconName: "Wind"
+      },
+      {
+        name: "Clothing Storage",
+        description: "Spacious wardrobes, closets and luggage storage in all bedrooms",
+        iconName: "Sparkles"
+      },
+      {
+        name: "Crib",
+        description: "Comfortable infant crib available upon request for families with babies",
+        iconName: "Baby"
+      },
+      {
+        name: "Fire Pit",
+        description: "Open-air campfire pit for cozy starlit evenings on the lawn",
+        iconName: "Flame"
+      },
+      {
+        name: "Hammock",
+        description: "Outdoor relaxation hammock set under tranquil plantation shade",
+        iconName: "Sun"
+      },
+      {
+        name: "Kids Play Area",
+        description: "Dedicated outdoor kids play area with swings and open green lawn",
+        iconName: "Gamepad2"
+      },
+      {
+        name: "Free Parking on Premises",
+        description: "Dedicated complimentary on-site private parking for multiple vehicles",
+        iconName: "Car"
       }
     ],
     rooms: [
       {
         id: "elevated-glass-chalet",
-        name: "The Elevated Glasshouse Chalet",
-        tagline: "Cantilevered glass-walled haven with sloping timber soffit and canopy balcony",
-        capacity: "2 Guests",
-        size: "820 sq.ft",
-        pricePerNight: "₹12,000",
+        name: "Lakeview Master Suite",
+        tagline: "Spacious master suite with panoramic lake balcony and luxury ensuite",
+        capacity: "2-3 Guests",
+        size: "650 sq.ft",
+        pricePerNight: "₹9,500",
         image: "/images/whispering-woods/glass-bedroom.jpg",
-        features: ["Floating King Bed", "Floor-to-Ceiling Glass Walls", "Private Timber Balcony", "Air Conditioning", "Rainforest Shower"]
+        features: ["King Bed", "Private Lake Balcony", "Air Conditioning", "Hot Water Shower", "Walk-in Wardrobe"]
       },
       {
         id: "estate-two-story-villa",
-        name: "The Two-Story Forest Residence",
-        tagline: "Spacious multi-level private residence with upper terrace and teakwood doors",
-        capacity: "4-6 Guests",
-        size: "1,600 sq.ft",
-        pricePerNight: "₹21,000",
-        image: "/images/whispering-woods/two-story-residence.jpg",
-        features: ["2 Master Bedrooms", "Upper Viewing Deck", "Private Living Lounge", "Stone Garden Pathway", "Dedicated Butler"]
-      },
-      {
-        id: "boulder-lawn-cottage",
-        name: "The Boulder Garden Cottage",
-        tagline: "Ground-level cozy sanctuary opening directly into stone pathways and boulders",
-        capacity: "2-3 Guests",
-        size: "750 sq.ft",
+        name: "Plantation Family Suite",
+        tagline: "Generous family room overlooking the green coffee groves and pool",
+        capacity: "4 Guests",
+        size: "800 sq.ft",
         pricePerNight: "₹9,500",
-        image: "/images/whispering-woods/stone-pathway-villa.jpg",
-        features: ["King Bed", "Private Lawn Veranda", "Granite Sit-out", "Complimentary Breakfast", "Espresso Machine"]
+        image: "/images/whispering-woods/two-story-residence.jpg",
+        features: ["2 Queen Beds", "Garden Sit-out", "Private Living Area", "Tea Station", "Attached Washroom"]
       }
     ],
     diningHighlight: {
-      title: "The Canopy Hearth",
+      title: "Lakeview Dining & Plantation Hearth",
       description:
-        "Set amid ancient trees and granite boulders, enjoy traditional Kerala bamboo-steamed delicacies, freshly roasted spices, and slow-braised mountain specialties.",
+        "Enjoy home-cooked Kerala specialties, live barbecue on the lawn, and breakfast on the private veranda overlooking the mist over the lake.",
       image: "/images/whispering-woods/boulder-forest-lawn.jpg",
-      specialties: ["Wayanad Bamboo Biryani", "Kanthari Spiced Fish", "Steamed Puttu & Kadala Curry", "Forest Honey Ginger Tea"]
+      specialties: ["Traditional Wayanad Sadhya", "Lake Fish Fry & Curry", "Tandoori Barbecue Evenings", "Fresh Filter Coffee & Malabar Snacks"]
     },
     experiences: [
       {
-        title: "Ancient Boulder Trail & Forest Walk",
-        description: "Guided morning exploration of natural rock shelters and wild spice groves surrounding the retreat.",
+        title: "Private Lake Walks & Plantation Trails",
+        description: "Scenic morning walks along the lake shore and guided exploration of the 10-acre estate.",
         image: "/images/whispering-woods/chalet-exterior.jpg"
       },
       {
-        title: "Campfire Barbecue on the Boulder Lawn",
-        description: "Private acoustic evening beside glowing embers surrounded by illuminated forest canopies.",
+        title: "Campfire Barbecue by the Lake",
+        description: "Private acoustic evening with glowing embers under starlit Wayanad skies.",
         image: "/images/whispering-woods/boulder-forest-lawn.jpg"
       }
-    ]
+    ],
+    houseRules: {
+      checkIn: "2:00 PM",
+      checkOut: "11:00 AM",
+      quietHours: "10:00 PM to 7:00 AM",
+      poolTiming: "8:00 AM to 10:00 PM",
+      additionalRules: [
+        "Alcohol is strictly not allowed inside the swimming pool",
+        "Smoking is strictly prohibited inside the villa bedrooms",
+        "Please respect the tranquil plantation environment and quiet hours"
+      ]
+    },
+    cancellationPolicy:
+      "100% cancellation fee within 3 days of booking date. Free cancellation is permitted up to 3 days prior to your check-in date."
   }
 ];
 

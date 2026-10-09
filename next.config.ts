@@ -8,6 +8,16 @@ const nextConfig: NextConfig = {
         destination: "/resorts/geo-greens",
         permanent: true,
       },
+      {
+        source: "/resorts/crocolake-hut",
+        destination: "/resorts/whispering-woods",
+        permanent: true,
+      },
+      {
+        source: "/resorts/crocolake-hut-resort",
+        destination: "/resorts/whispering-woods",
+        permanent: true,
+      },
     ];
   },
 };

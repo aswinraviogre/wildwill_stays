@@ -15,7 +15,12 @@ export default async function ResortPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const resort = RESORTS_DATA.find((r) => r.slug === slug);
+  const resort = RESORTS_DATA.find(
+    (r) =>
+      r.slug === slug ||
+      (r.slug === "whispering-woods" &&
+        (slug === "crocolake-hut" || slug === "crocolake-hut-resort"))
+  );
 
   if (!resort) {
     notFound();

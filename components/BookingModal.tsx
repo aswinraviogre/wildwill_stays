@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { X, Calendar, Sparkles, Send, CheckCircle2, MessageSquare } from "lucide-react";
+import { X, Calendar, Sparkles, Send, CheckCircle2, MessageSquare, AlertCircle } from "lucide-react";
 import { RESORTS_DATA } from "@/data/resortsData";
 import { buildWhatsAppUrl } from "@/constants/contact";
 
@@ -11,9 +11,17 @@ interface BookingModalProps {
   defaultResortSlug?: string;
 }
 
-export default function BookingModal({ isOpen: propIsOpen, onClose, defaultResortSlug }: BookingModalProps) {
+export default function BookingModal({
+  isOpen: propIsOpen,
+  onClose,
+  defaultResortSlug
+}: BookingModalProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const [selectedResort, setSelectedResort] = useState(defaultResortSlug || "whispering-woods");
+  
+  // Format today's date YYYY-MM-DD
+  const todayStr = new Date().toISOString().split("T")[0];
+  
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [adults, setAdults] = useState("2");
@@ -22,16 +30,21 @@ export default function BookingModal({ isOpen: propIsOpen, onClose, defaultResor
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [specialOccasion, setSpecialOccasion] = useState("Relaxation & Leisure");
+  const [validationError, setValidationError] = useState<string | null>(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  // Sync with prop if provided
+  // Sync with prop
   useEffect(() => {
     if (propIsOpen !== undefined) {
       setInternalOpen(propIsOpen);
+      if (propIsOpen) {
+        setValidationError(null);
+        setIsSubmitted(false);
+      }
     }
   }, [propIsOpen]);
 
-  // Sync defaultResortSlug if changed
+  // Sync defaultResortSlug
   useEffect(() => {
     if (defaultResortSlug) {
       setSelectedResort(defaultResortSlug);
@@ -46,22 +59,64 @@ export default function BookingModal({ isOpen: propIsOpen, onClose, defaultResor
       }
       setInternalOpen(true);
       setIsSubmitted(false);
+      setValidationError(null);
     };
 
     window.addEventListener("open-booking-modal" as any, handleGlobalOpen);
     return () => window.removeEventListener("open-booking-modal" as any, handleGlobalOpen);
   }, []);
 
+  // Calculate minimum check-out date (strictly next day of check-in)
+  const getMinCheckOut = () => {
+    if (!checkIn) return todayStr;
+    const d = new Date(checkIn);
+    d.setDate(d.getDate() + 1);
+    return d.toISOString().split("T")[0];
+  };
+
+  const handleCheckInChange = (val: string) => {
+    setCheckIn(val);
+    setValidationError(null);
+    // If checkOut is earlier than or equal to new checkIn, reset or bump checkOut
+    if (checkOut && val && checkOut <= val) {
+      const nextDay = new Date(val);
+      nextDay.setDate(nextDay.getDate() + 1);
+      setCheckOut(nextDay.toISOString().split("T")[0]);
+    }
+  };
+
+  const handleCheckOutChange = (val: string) => {
+    setCheckOut(val);
+    setValidationError(null);
+  };
+
   const handleCloseModal = () => {
     setInternalOpen(false);
     setIsSubmitted(false);
+    setValidationError(null);
     if (onClose) onClose();
   };
 
   const handleWhatsAppInquiry = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Strict validation: check-out must be strictly greater than check-in
+    if (checkIn && checkOut && new Date(checkOut) <= new Date(checkIn)) {
+      setValidationError("Check-out date must be later than check-in date.");
+      return;
+    }
+
+    if (!phone || phone.trim().length < 6) {
+      setValidationError("Please enter a valid WhatsApp or contact phone number.");
+      return;
+    }
+
+    setValidationError(null);
+
     const matchedResort = RESORTS_DATA.find((r) => r.slug === selectedResort);
-    const resortName = matchedResort ? `${matchedResort.name} (${matchedResort.badge})` : "Wildvill Stays Wayanad";
+    const resortName = matchedResort
+      ? `${matchedResort.name} (${matchedResort.badge})`
+      : "Wildvill Stays Retreat";
 
     const message = `✨ *Wildvill Stays Reservation Inquiry* ✨
 --------------------------------
@@ -76,96 +131,126 @@ export default function BookingModal({ isOpen: propIsOpen, onClose, defaultResor
 • *Contact Phone:* ${phone || "Not Provided"}
 • *Email:* ${email || "Not Provided"}
 
-Please share current villa availability, customized packages, and direct booking rates.`;
+Please confirm villa availability, customized packages, and direct booking rates.`;
 
     const whatsappUrl = buildWhatsAppUrl(message);
-    
+
     setIsSubmitted(true);
     setTimeout(() => {
       window.open(whatsappUrl, "_blank");
-    }, 600);
+    }, 500);
   };
 
   if (!internalOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm animate-fade-in">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/80 backdrop-blur-xs animate-fade-in"
+      onClick={handleCloseModal}
+    >
       <div
-        className="relative w-full max-w-3xl bg-white text-slate-900 rounded-3xl border border-slate-200 shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
+        className="relative w-full max-w-2xl bg-[#FAF7F2] text-[#1d2b1f] rounded-3xl border border-[#E8E2D5] shadow-2xl overflow-hidden max-h-[92vh] flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Saffron Header Bar */}
-        <div className="flex items-center justify-between p-6 bg-[#111b29] text-white">
-          <div className="flex items-center space-x-2">
-            <Sparkles className="w-5 h-5 text-[#fba919]" />
+        {/* Header Bar */}
+        <div className="flex items-center justify-between p-5 sm:p-6 bg-[#1b2b1f] text-white">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-9 h-9 rounded-full bg-[#c29053]/20 border border-[#c29053]/40 flex items-center justify-center text-[#e2ba84]">
+              <Sparkles className="w-4 h-4" />
+            </div>
             <div>
-              <h3 className="text-xl font-serif font-bold text-white">
+              <h3 className="text-lg sm:text-xl font-serif font-medium text-white tracking-tight">
                 Reserve Your Stay at Wildvill
               </h3>
-              <p className="text-xs text-slate-300">Instant Concierge Assistance & Direct Rates</p>
+              <p className="text-[11px] sm:text-xs text-[#c2ab87]">
+                Instant Concierge Assistance &amp; Direct Rates
+              </p>
             </div>
           </div>
           <button
             onClick={handleCloseModal}
-            className="p-2 rounded-full hover:bg-white/10 text-slate-300 hover:text-white transition-colors"
-            aria-label="Close modal"
+            className="p-2 rounded-full hover:bg-white/10 text-white/80 hover:text-white transition-colors"
+            aria-label="Close booking modal"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content Body */}
-        <div className="p-6 sm:p-8 overflow-y-auto space-y-6">
+        <div className="p-5 sm:p-8 overflow-y-auto space-y-6">
           {isSubmitted ? (
-            <div className="text-center py-12 space-y-4 animate-fade-in-scale">
+            <div className="text-center py-10 space-y-4 animate-fade-in-scale">
               <div className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-600 mx-auto flex items-center justify-center border border-emerald-200">
                 <CheckCircle2 className="w-10 h-10" />
               </div>
-              <h4 className="text-2xl font-serif font-bold text-slate-900">
-                Inquiry Transferred to WhatsApp!
+              <h4 className="text-2xl font-serif font-medium text-[#1d2b1f]">
+                Inquiry Sent to WhatsApp!
               </h4>
-              <p className="text-slate-600 text-sm max-w-md mx-auto leading-relaxed">
-                Thank you, {name || "Guest"}. Your booking dates and retreat preferences are being sent directly to our private concierge.
+              <p className="text-[#5e665d] text-xs sm:text-sm max-w-md mx-auto leading-relaxed font-light">
+                Thank you, {name || "Guest"}. Your reservation dates and villa preferences are being forwarded directly to our private concierge desk.
               </p>
               <div className="pt-4">
                 <button
                   onClick={handleCloseModal}
-                  className="px-6 py-2.5 rounded-full bg-navy-950 text-white font-semibold text-sm hover:bg-navy-900 transition-colors shadow-md"
+                  className="px-8 py-3 rounded-full bg-[#1b2b1f] text-white font-semibold text-xs uppercase tracking-wider hover:bg-[#2b3d2f] transition-colors shadow-md"
                 >
                   Return to Website
                 </button>
               </div>
             </div>
           ) : (
-            <form onSubmit={handleWhatsAppInquiry} className="space-y-6">
-              {/* Resort Choice Pill Selection */}
+            <form onSubmit={handleWhatsAppInquiry} className="space-y-5">
+              {/* Validation Alert */}
+              {validationError && (
+                <div className="p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center space-x-2">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-red-600" />
+                  <span>{validationError}</span>
+                </div>
+              )}
+
+              {/* Resort Selection */}
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#5e665d] mb-2">
                   1. Select Preferred Retreat
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   {RESORTS_DATA.map((resort) => {
                     const isSelected = selectedResort === resort.slug;
                     return (
                       <div
                         key={resort.id}
                         onClick={() => setSelectedResort(resort.slug)}
-                        className={`cursor-pointer p-3 rounded-2xl border transition-all duration-300 flex items-center space-x-3 ${
+                        className={`cursor-pointer p-3 rounded-2xl border transition-all duration-200 flex items-center space-x-3 ${
                           isSelected
-                            ? "bg-navy-950 text-white border-navy-950 shadow-md scale-[1.02]"
-                            : "bg-slate-50 border-slate-200 text-slate-700 hover:border-slate-300"
+                            ? "bg-[#1b2b1f] text-white border-[#1b2b1f] shadow-md scale-[1.01]"
+                            : "bg-white border-[#E8E2D5] text-[#1d2b1f] hover:border-[#c29053]/50"
                         }`}
                       >
                         <div
-                          className="w-10 h-10 rounded-xl bg-cover bg-center shrink-0 border border-slate-300"
+                          className="w-12 h-12 rounded-xl bg-cover bg-center shrink-0 border border-white/20"
                           style={{ backgroundImage: `url(${resort.heroImage})` }}
                         />
                         <div className="truncate">
-                          <div className={`text-[10px] uppercase tracking-wider font-semibold truncate ${isSelected ? "text-sky-300" : "text-navy-950"}`}>
-                            {resort.badge.split("&")[0]}
+                          <div
+                            className={`text-[10px] uppercase tracking-wider font-semibold truncate ${
+                              isSelected ? "text-[#e2ba84]" : "text-[#b58742]"
+                            }`}
+                          >
+                            {resort.badge}
                           </div>
-                          <div className={`text-xs font-semibold truncate ${isSelected ? "text-white" : "text-slate-900"}`}>
-                            {resort.name.replace("Wildvill ", "")}
+                          <div
+                            className={`text-xs sm:text-sm font-serif font-semibold truncate ${
+                              isSelected ? "text-white" : "text-[#1d2b1f]"
+                            }`}
+                          >
+                            {resort.name}
+                          </div>
+                          <div
+                            className={`text-[11px] truncate ${
+                              isSelected ? "text-white/70" : "text-[#737a71]"
+                            }`}
+                          >
+                            From {resort.startingPrice} / night
                           </div>
                         </div>
                       </div>
@@ -174,90 +259,105 @@ Please share current villa availability, customized packages, and direct booking
                 </div>
               </div>
 
-              {/* Dates & Guests Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Check-In Date *
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    value={checkIn}
-                    onChange={(e) => setCheckIn(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-navy-950 shadow-sm"
-                  />
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Check-Out Date *
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    value={checkOut}
-                    onChange={(e) => setCheckOut(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-navy-950 shadow-sm"
-                  />
+              {/* Check-In and Check-Out Dates */}
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#5e665d] mb-2">
+                  2. Travel Dates
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                  <div>
+                    <label className="block text-xs font-semibold text-[#1d2b1f] mb-1">
+                      Check-In Date *
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      min={todayStr}
+                      value={checkIn}
+                      onChange={(e) => handleCheckInChange(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E8E2D5] text-[#1d2b1f] text-xs sm:text-sm focus:outline-none focus:border-[#c29053] shadow-xs"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-[#1d2b1f] mb-1">
+                      Check-Out Date *
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      min={getMinCheckOut()}
+                      value={checkOut}
+                      onChange={(e) => handleCheckOutChange(e.target.value)}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E8E2D5] text-[#1d2b1f] text-xs sm:text-sm focus:outline-none focus:border-[#c29053] shadow-xs"
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* Guests Count & Occasion */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Adults (12+ yrs)
-                  </label>
-                  <select
-                    value={adults}
-                    onChange={(e) => setAdults(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-navy-950 shadow-sm"
-                  >
-                    <option value="1">1 Adult</option>
-                    <option value="2">2 Adults</option>
-                    <option value="3">3 Adults</option>
-                    <option value="4">4 Adults</option>
-                    <option value="5+">5+ Adults (Group)</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Children (0-11 yrs)
-                  </label>
-                  <select
-                    value={children}
-                    onChange={(e) => setChildren(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-navy-950 shadow-sm"
-                  >
-                    <option value="0">0 Children</option>
-                    <option value="1">1 Child</option>
-                    <option value="2">2 Children</option>
-                    <option value="3+">3+ Children</option>
-                  </select>
-                </div>
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
-                    Occasion / Purpose
-                  </label>
-                  <select
-                    value={specialOccasion}
-                    onChange={(e) => setSpecialOccasion(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm focus:outline-none focus:border-navy-950 shadow-sm"
-                  >
-                    <option value="Relaxation & Leisure">Relaxation & Leisure</option>
-                    <option value="Honeymoon & Romantic">Honeymoon & Romantic</option>
-                    <option value="Family Holiday">Family Holiday</option>
-                    <option value="Birthday / Anniversary">Birthday / Anniversary</option>
-                    <option value="Corporate Retreat">Corporate Retreat</option>
-                  </select>
+              <div>
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#5e665d] mb-2">
+                  3. Party Details
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+                  <div>
+                    <label className="block text-xs font-semibold text-[#1d2b1f] mb-1">
+                      Adults (12+ yrs)
+                    </label>
+                    <select
+                      value={adults}
+                      onChange={(e) => setAdults(e.target.value)}
+                      className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#E8E2D5] text-[#1d2b1f] text-xs sm:text-sm focus:outline-none focus:border-[#c29053] shadow-xs"
+                    >
+                      <option value="1">1 Adult</option>
+                      <option value="2">2 Adults</option>
+                      <option value="3">3 Adults</option>
+                      <option value="4">4 Adults</option>
+                      <option value="5+">5+ Adults (Group)</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-[#1d2b1f] mb-1">
+                      Children (0-11 yrs)
+                    </label>
+                    <select
+                      value={children}
+                      onChange={(e) => setChildren(e.target.value)}
+                      className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#E8E2D5] text-[#1d2b1f] text-xs sm:text-sm focus:outline-none focus:border-[#c29053] shadow-xs"
+                    >
+                      <option value="0">0 Children</option>
+                      <option value="1">1 Child</option>
+                      <option value="2">2 Children</option>
+                      <option value="3+">3+ Children</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-xs font-semibold text-[#1d2b1f] mb-1">
+                      Occasion
+                    </label>
+                    <select
+                      value={specialOccasion}
+                      onChange={(e) => setSpecialOccasion(e.target.value)}
+                      className="w-full px-3 py-2.5 rounded-xl bg-white border border-[#E8E2D5] text-[#1d2b1f] text-xs sm:text-sm focus:outline-none focus:border-[#c29053] shadow-xs"
+                    >
+                      <option value="Relaxation & Leisure">Relaxation &amp; Leisure</option>
+                      <option value="Honeymoon & Romantic">Honeymoon &amp; Romantic</option>
+                      <option value="Family Holiday">Family Holiday</option>
+                      <option value="Birthday / Anniversary">Birthday / Anniversary</option>
+                      <option value="Workation">Workation</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               {/* Guest Contact Information */}
-              <div className="space-y-4 pt-2 border-t border-slate-200">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-3 pt-2 border-t border-[#E8E2D5]">
+                <label className="block text-[11px] font-bold uppercase tracking-wider text-[#5e665d]">
+                  4. Guest Information
+                </label>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-[#1d2b1f] mb-1">
                       Full Name *
                     </label>
                     <input
@@ -266,55 +366,54 @@ Please share current villa availability, customized packages, and direct booking
                       placeholder="e.g. Rahul Menon"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:border-navy-950 shadow-sm"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E8E2D5] text-[#1d2b1f] text-xs sm:text-sm placeholder-slate-400 focus:outline-none focus:border-[#c29053] shadow-xs"
                     />
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-1">
+                    <label className="block text-xs font-semibold text-[#1d2b1f] mb-1">
                       WhatsApp / Phone Number *
                     </label>
                     <input
                       type="tel"
                       required
-                      placeholder="Your mobile number"
+                      placeholder="+91 98765 43210"
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
-                      className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:border-navy-950 shadow-sm"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E8E2D5] text-[#1d2b1f] text-xs sm:text-sm placeholder-slate-400 focus:outline-none focus:border-[#c29053] shadow-xs"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-slate-700 mb-1">
+                  <label className="block text-xs font-semibold text-[#1d2b1f] mb-1">
                     Email Address (Optional)
                   </label>
                   <input
                     type="email"
-                    placeholder="rahul@example.com"
+                    placeholder="guest@example.com"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-slate-900 text-sm placeholder-slate-400 focus:outline-none focus:border-navy-950 shadow-sm"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-white border border-[#E8E2D5] text-[#1d2b1f] text-xs sm:text-sm placeholder-slate-400 focus:outline-none focus:border-[#c29053] shadow-xs"
                   />
                 </div>
               </div>
 
               {/* Action Buttons */}
-              <div className="pt-4 flex flex-col sm:flex-row gap-3">
+              <div className="pt-2 flex flex-col sm:flex-row gap-3">
                 <button
                   type="submit"
-                  className="flex-1 inline-flex items-center justify-center space-x-2 py-3.5 px-6 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm shadow-md transition-all duration-300 hover:shadow-lg"
+                  className="flex-1 inline-flex items-center justify-center space-x-2 py-3.5 px-6 rounded-full bg-[#25D366] hover:bg-[#20ba59] text-white font-semibold text-xs sm:text-sm uppercase tracking-wider shadow-md transition-all active:scale-95"
                 >
-                  <MessageSquare className="w-4 h-4" />
-                  <span>Send to WhatsApp</span>
+                  <MessageSquare className="w-4 h-4 fill-white" />
+                  <span>Send Enquiry via WhatsApp</span>
                 </button>
 
                 <button
                   type="button"
-                  onClick={handleWhatsAppInquiry}
-                  className="btn-saf-blue inline-flex items-center justify-center space-x-2 py-3.5 px-6 font-semibold text-sm shadow-md"
+                  onClick={handleCloseModal}
+                  className="inline-flex items-center justify-center py-3.5 px-6 rounded-full border border-[#E8E2D5] hover:bg-white text-[#5e665d] text-xs font-semibold tracking-wider uppercase transition-colors"
                 >
-                  <Send className="w-4 h-4" />
-                  <span>Direct Inquiry</span>
+                  Cancel
                 </button>
               </div>
             </form>
